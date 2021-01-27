@@ -1,0 +1,10 @@
+{
+    "name": "msthu/oath2-billing",
+    "authors": [
+        {
+            "name": "msthu",
+            "email": "mischa@b302.nl"
+        }
+    ],
+    "require": {}
+}
