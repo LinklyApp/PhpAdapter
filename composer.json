@@ -1,5 +1,5 @@
 {
-    "name": "msthu/oath2-billing",
+    "name": "thullner/oath2-billing",
     "description": "Billing OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
     "license": "MIT",
     "keywords": [
