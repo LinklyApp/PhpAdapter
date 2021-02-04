@@ -1,10 +1,25 @@
 {
     "name": "msthu/oath2-billing",
+    "description": "Billing OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+    "license": "MIT",
+    "keywords": [
+        "oauth2",
+        "authorization",
+        "authentication",
+        "billling"
+    ],
     "authors": [
         {
             "name": "msthu",
             "email": "mischa@b302.nl"
         }
     ],
-    "require": {}
+    "require": {
+        "league/oauth2-client": "^2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "League\\OAuth2\\Client\\": "src/"
+        }
+    }
 }
