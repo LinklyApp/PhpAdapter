@@ -8,8 +8,15 @@ use League\OAuth2\Client\Provider\Billing;
 $provider = new Billing([
     'clientId'          => 'plugin',
     'clientSecret'      => 'secret',
-    'redirectUri'       => 'http://localhost/wordpress/billing-signin-callback',
+    'redirectUri'       => 'http://localhost/oauth2-billing/example.php',
 ]);
+
+//$user = $provider->getResourceOwner(new \League\OAuth2\Client\Token\AccessToken(['access_token' => 'test']));
+//var_dump($user->toArray());
+//die();
+
+session_start();
+
 
 if (!isset($_GET['code'])) {
 
@@ -24,11 +31,10 @@ if (!isset($_GET['code'])) {
     exit;
 
 // Check given state against previously stored one to mitigate CSRF attack
-} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
 
+} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
     unset($_SESSION['oauth2state']);
     exit('Invalid state');
-
 } else {
 
     // Try to get an access token (using the authorization code grant)
@@ -51,6 +57,7 @@ if (!isset($_GET['code'])) {
         exit('Oh dear...');
     }
 
+    echo 'yes';
     // Use this to interact with an API on the users behalf
     echo $token->getToken();
 }

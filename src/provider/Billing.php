@@ -3,6 +3,7 @@
 namespace League\OAuth2\Client\Provider;
 
 use Exception;
+use League\OAuth2\Client\Helpers\CodeChallenge;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
@@ -16,14 +17,14 @@ class Billing extends AbstractProvider
      *
      * @var string
      */
-    public $domain = 'https://billing-sso.azurewebsites.net';
+    public $domain = 'https://localhost:5001';
 
     /**
      * Api domain
      *
      * @var string
      */
-    public $apiDomain = 'https://api.billing.com';
+    public $apiDomain = 'https://thullner-billing-api.azurewebsites.net';
 
     /**
      * Get authorization url to begin OAuth flow
@@ -34,6 +35,7 @@ class Billing extends AbstractProvider
     {
         return $this->domain.'/connect/authorize';
     }
+
 
     /**
      * Get access token url to retrieve token
@@ -56,10 +58,7 @@ class Billing extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        if ($this->domain === 'https://github.com') {
-            return $this->apiDomain.'/user';
-        }
-        return $this->domain.'/api/v3/user';
+        return $this->apiDomain.'/api/users/testuser';
     }
 
     /**
@@ -75,6 +74,19 @@ class Billing extends AbstractProvider
         return ['openid'];
     }
 
+    protected function getAuthorizationParameters(array $options)
+    {
+        $options = parent::getAuthorizationParameters($options);
+
+        $codeChallenge = new CodeChallenge();
+        $codeChallenge->generate();
+
+        $options['code_challenge'] = $codeChallenge->challenge;
+        $options['code_challenge_method'] = $codeChallenge->challengeMethod;
+
+        return $options;
+    }
+
     /**
      * Check a provider response for errors.
      *
@@ -87,12 +99,15 @@ class Billing extends AbstractProvider
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
-        if ($response->getStatusCode() >= 400) {
-            throw new Exception($response, $data);
-        } elseif (isset($data['error'])) {
-            throw new Exception($response, $data);
-        }
+//        if ($response->getStatusCode() >= 400) {
+//            throw new Exception($response, $data);
+//        } elseif (isset($data['error'])) {
+//            throw new Exception($response, $data);
+//        }
+
+        return true;
     }
+
 
     /**
      * Generate a user object from a successful user details request.
