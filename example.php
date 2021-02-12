@@ -15,8 +15,9 @@ $provider = new Billing([
 //var_dump($user->toArray());
 //die();
 
-session_start();
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isset($_GET['code'])) {
 
@@ -29,13 +30,12 @@ if (!isset($_GET['code'])) {
 
     header('Location: ' . $authUrl);
     exit;
-}
 // Check given state against previously stored one to mitigate CSRF attack
 
-//} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
-//    unset($_SESSION['oauth2state']);
-//    exit('Invalid state');
-//}
+} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+    unset($_SESSION['oauth2state']);
+    exit('Invalid state');
+}
 else {
 
     // Try to get an access token (using the authorization code grant)
@@ -50,15 +50,11 @@ else {
         $user = $provider->getResourceOwner($token);
 
         // Use these details to create a new profile
-        printf('Hello %s!', $user->getNickname());
+        var_dump($user->toArray());
 
     } catch (Exception $e) {
 
         // Failed to get user details
         exit('Oh dear...');
     }
-
-    echo 'yes';
-    // Use this to interact with an API on the users behalf
-    echo $token->getToken();
 }
