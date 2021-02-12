@@ -17,7 +17,8 @@ class CodeChallenge
 
     private function generateVerifier()
     {
-        $random = bin2hex(openssl_random_pseudo_bytes(32));
+//        $random = bin2hex(openssl_random_pseudo_bytes(32));
+        $random = 'ec6ab82eab0a26c33f9d286211e406b88cd3402e005ac2d1e06e8a17a84d9f31';
         $this->verifier = $this->base64url_encode(pack('H*', $random));
     }
 
