@@ -81,7 +81,7 @@ class Address
 
     public function getHouseNumberWithSuffix()
     {
-        $houseNumberWithSuffix = $this->getHouseNumber();
+        $houseNumberWithSuffix = $this->getHouseNumberWithoutSuffix();
 
         if ($houseNumberSuffix = $this->getHouseNumberSuffix()) {
             $houseNumberContainsNumbers = !!preg_match('~[0-9]~', $houseNumberSuffix);
@@ -96,7 +96,7 @@ class Address
 
     public function getStreetAddress()
     {
-        return $this->getStreet() . ' ' . $this->getHouseNumberWithSuffix();
+        return $this->getStreetName() . ' ' . $this->getHouseNumberWithSuffix();
     }
 
     public function getPostcode()
