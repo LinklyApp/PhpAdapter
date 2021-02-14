@@ -46,6 +46,7 @@ else {
     // Optional: Now you have a token you can look up a users profile data
     try {
 
+        var_dump($token);
         // We got an access token, let's now get the user's details
         $user = $provider->getResourceOwner($token);
 

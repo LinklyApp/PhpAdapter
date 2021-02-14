@@ -16,14 +16,14 @@ class Billing extends AbstractProvider
      *
      * @var string
      */
-    public $domain = 'https://localhost:5001';
+    public $domain = 'https://localhost:5004';
 
     /**
      * Api domain
      *
      * @var string
      */
-    public $apiDomain = 'https://thullner-billing-api.azurewebsites.net';
+    public $apiDomain = 'https://localhost:5001';
 
     /** @var CodeChallenge */
     private $codeChallenge;
@@ -73,7 +73,7 @@ class Billing extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['openid'];
+        return ['openid api1'];
     }
 
     protected function getAuthorizationParameters(array $options)

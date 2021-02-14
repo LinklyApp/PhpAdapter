@@ -33,7 +33,6 @@ class CodeChallenge
         $base64url = strtr($base64, '+/', '-_');
         return ($base64url);
     }
-
 }
 
 

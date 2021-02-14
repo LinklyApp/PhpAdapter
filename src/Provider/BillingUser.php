@@ -21,8 +21,9 @@ class BillingUser implements ResourceOwnerInterface
     public function __construct(array $response = array())
     {
         $this->response = $response;
-        $this->billingAddress = new Address($this->getValueByKey($this->response, 'billing'));
-        $this->shippingAddress = new Address($this->getValueByKey($this->response, 'shipping'));
+
+        $this->billingAddress = new Address($this->getValueByKey($this->response, 'billingAddress'));
+        $this->shippingAddress = new Address($this->getValueByKey($this->response, 'shippingAddress'));
     }
 
     public function getId()
