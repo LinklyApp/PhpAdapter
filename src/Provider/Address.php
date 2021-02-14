@@ -53,7 +53,7 @@ class Address
 
     public function getFullName()
     {
-        $fullName = $this->getValueByKey($this->response, 'firstName');
+        $fullName = $this->getValueByKey($this->address, 'firstName');
         $fullName .= ' ' . $this->getFamilyNameWithInfix();
 
         return $fullName;
@@ -76,7 +76,7 @@ class Address
 
     public function getHouseNumberSuffix()
     {
-        return $this->getValueByKey($this->address, 'houseNumber');
+        return $this->getValueByKey($this->address, 'houseNumberSuffix');
     }
 
     public function getHouseNumberWithSuffix()
