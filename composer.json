@@ -6,7 +6,7 @@
         "oauth2",
         "authorization",
         "authentication",
-        "billling"
+        "billing"
     ],
     "authors": [
         {

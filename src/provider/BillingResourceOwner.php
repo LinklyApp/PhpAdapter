@@ -22,29 +22,58 @@ class BillingResourceOwner implements ResourceOwnerInterface
         return $this->getValueByKey($this->response, 'id');
     }
 
-
     public function getEmail()
     {
         return $this->getValueByKey($this->response, 'email');
     }
 
-
-    public function getName()
+    public function getFirstName()
     {
-        return $this->getValueByKey($this->response, 'name');
+        return $this->getValueByKey($this->response, 'firstName');
     }
 
-    public function getNickname()
+    public function getFamilyNameInfix()
     {
-        return $this->getValueByKey($this->response, 'login');
+        return $this->getValueByKey($this->response, 'familyNameInfix');
     }
 
-
-    public function getUrl()
+    public function getFamilyName()
     {
-        $urlParts = array_filter([$this->domain, $this->getNickname()]);
+        return $this->getValueByKey($this->response, 'familyName');
+    }
 
-        return count($urlParts) ? implode('/', $urlParts) : null;
+    public function getFamilyNameWithInfix()
+    {
+        $infix = '';
+
+        if ($this->getValueByKey($this->response, 'familyNameInfix')) {
+            $infix .= $this->getValueByKey($this->response, 'familyNameInfix') . ' ';
+        }
+
+        return $infix . $this->getValueByKey($this->response, 'familyName');
+    }
+
+    public function getBillingAddress()
+    {
+        return $this->getValueByKey($this->response, 'billing');
+    }
+
+    public function isShippingAddressBillingAddress()
+    {
+        return $this->getValueByKey($this->response, 'shippingIsBillingAddress');
+    }
+
+    public function getShippingAddress()
+    {
+        return $this->getValueByKey($this->response, 'shipping');
+    }
+
+    public function getFullName()
+    {
+        $fullName = $this->getValueByKey($this->response, 'firstName');
+        $fullName .= ' ' . $this->getFamilyNameWithInfix();
+
+        return $fullName;
     }
 
     /**
