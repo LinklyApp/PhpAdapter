@@ -142,7 +142,7 @@ class Billing extends AbstractProvider
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        $user = new BillingResourceOwner($response);
+        $user = new BillingUser($response);
 
         return $user->setDomain($this->domain);
     }

@@ -5,16 +5,24 @@ namespace League\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
-class BillingResourceOwner implements ResourceOwnerInterface
+class BillingUser implements ResourceOwnerInterface
 {
     use ArrayAccessorTrait;
 
     protected $domain;
     protected $response;
 
+    /** @var Address  */
+    private $billingAddress;
+
+    /** @var Address  */
+    private $shippingAddress;
+
     public function __construct(array $response = array())
     {
         $this->response = $response;
+        $this->billingAddress = new Address($this->getValueByKey($this->response, 'billing'));
+        $this->shippingAddress = new Address($this->getValueByKey($this->response, 'shipping'));
     }
 
     public function getId()
@@ -53,21 +61,6 @@ class BillingResourceOwner implements ResourceOwnerInterface
         return $infix . $this->getValueByKey($this->response, 'familyName');
     }
 
-    public function getBillingAddress()
-    {
-        return $this->getValueByKey($this->response, 'billing');
-    }
-
-    public function isShippingAddressBillingAddress()
-    {
-        return $this->getValueByKey($this->response, 'shippingIsBillingAddress');
-    }
-
-    public function getShippingAddress()
-    {
-        return $this->getValueByKey($this->response, 'shipping');
-    }
-
     public function getFullName()
     {
         $fullName = $this->getValueByKey($this->response, 'firstName');
@@ -75,6 +68,23 @@ class BillingResourceOwner implements ResourceOwnerInterface
 
         return $fullName;
     }
+
+    public function getBillingAddress()
+    {
+        return $this->billingAddress;
+    }
+
+    public function getShippingAddress()
+    {
+        return $this->shippingAddress;
+    }
+
+    public function isShippingAddressBillingAddress()
+    {
+        return $this->getValueByKey($this->response, 'shippingIsBillingAddress');
+    }
+
+
 
     /**
      * Set resource owner domain
