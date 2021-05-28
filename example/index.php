@@ -1,14 +1,15 @@
 <?php
 
-require __DIR__ . './vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 
-use League\OAuth2\Client\Provider\Billing;
+use League\OAuth2\Client\Provider\Memento;
 
-$provider = new Billing([
-    'clientId'          => 'plugin',
+$provider = new Memento([
+    'clientId'          => 'test-wp-plugin',
     'clientSecret'      => 'secret',
-    'redirectUri'       => 'https://oauth2-billing.test/example.php',
+    'redirectUri'       => 'http://localhost/oauth2-memento/example',
+    'environment'       => 'local' // options are "prod", "beta", "local"
 ]);
 
 //$user = $provider->getResourceOwner(new \League\OAuth2\Client\Token\AccessToken(['access_token' => 'test']));
@@ -54,6 +55,8 @@ else {
         var_dump($user->toArray());
 
     } catch (Exception $e) {
+
+        var_dump($e);
 
         // Failed to get user details
         exit('Oh dear...');

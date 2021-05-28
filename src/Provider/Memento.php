@@ -7,26 +7,41 @@ use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
 
-class Billing extends AbstractProvider
+class Memento extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    /**
-     * Domain
-     *
-     * @var string
-     */
-    public $domain = 'https://localhost:5004';
+    public $domain = 'https://accounts.mementobilling.com';
+    public $apiDomain = 'https://api.mementobilling.com';
+
+    public $betaDomain = 'https://accounts.acc.mementobilling.com';
+    public $betaApiDomain = 'https://api.acc.mementobilling.com';
+
+    public $localDomain = 'https://localhost:5001';
+    public $localApiDomain = 'https://localhost:5005';
+
+    public $environment = 'prod';
+    private $environmentOptions = ['prod', 'beta', 'local'];
 
     /**
-     * Api domain
-     *
-     * @var string
+     * @var CodeChallenge
      */
-    public $apiDomain = 'https://localhost:5001';
-
-    /** @var CodeChallenge */
     private $codeChallenge;
+
+    public function __construct($options = [], array $collaborators = [])
+    {
+        parent::__construct($options, $collaborators);
+
+        if (!empty($options['environment'])) {
+            if (!in_array($options['environment'], $this->environmentOptions)) {
+                $message = 'Invalid environment, available options are "prod", "beta" and "local"';
+                throw new \InvalidArgumentException($message);
+            }
+
+            $this->environment = $options['environment'];
+        }
+    }
+
 
     /**
      * Get authorization url to begin OAuth flow
@@ -35,7 +50,7 @@ class Billing extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        return $this->domain . '/connect/authorize';
+        return $this->getDomainUrl() . '/connect/authorize';
     }
 
 
@@ -48,7 +63,7 @@ class Billing extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return $this->domain . '/connect/token';
+        return $this->getDomainUrl() . '/connect/token';
     }
 
     /**
@@ -60,7 +75,7 @@ class Billing extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        return $this->apiDomain . '/api/users/testuser';
+        return $this->getApiDomainUrl() . '/api/users/info';
     }
 
     /**
@@ -73,7 +88,7 @@ class Billing extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['openid api1'];
+        return ['openid profile memento-api'];
     }
 
     protected function getAuthorizationParameters(array $options)
@@ -142,8 +157,35 @@ class Billing extends AbstractProvider
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        $user = new BillingUser($response);
+        $user = new MementoUser($response);
+        return $user->setDomain($this->getApiDomainUrl());
+    }
 
-        return $user->setDomain($this->domain);
+    /**
+     * Get the base Facebook URL.
+     */
+    private function getDomainUrl(): string
+    {
+        if ($this->environment === 'local') {
+            return $this->localDomain;
+        }
+        if ($this->environment === 'beta') {
+            return $this->betaDomain;
+        }
+        return $this->domain;
+    }
+
+    /**
+     * Get the base Graph API URL.
+     */
+    private function getApiDomainUrl(): string
+    {
+        if ($this->environment === 'local') {
+            return $this->localApiDomain;
+        }
+        if ($this->environment === 'beta') {
+            return $this->betaApiDomain;
+        }
+        return $this->apiDomain;
     }
 }

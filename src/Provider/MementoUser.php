@@ -5,7 +5,7 @@ namespace League\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
-class BillingUser implements ResourceOwnerInterface
+class MementoUser implements ResourceOwnerInterface
 {
     use ArrayAccessorTrait;
 
@@ -28,7 +28,7 @@ class BillingUser implements ResourceOwnerInterface
 
     public function getId()
     {
-        return $this->getValueByKey($this->response, 'id');
+        return $this->getValueByKey($this->response, 'sub');
     }
 
     public function getEmail()
@@ -86,13 +86,12 @@ class BillingUser implements ResourceOwnerInterface
     }
 
 
-
     /**
      * Set resource owner domain
      *
-     * @param  string $domain
+     * @param string $domain
      *
-     * @return ResourceOwner
+     * @return MementoUser
      */
     public function setDomain($domain)
     {
