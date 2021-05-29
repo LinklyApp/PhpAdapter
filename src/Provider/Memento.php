@@ -88,7 +88,7 @@ class Memento extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['openid profile memento-api'];
+        return ['openid profile offline_access memento-api'];
     }
 
     protected function getAuthorizationParameters(array $options)
