@@ -117,9 +117,10 @@ class Memento extends AbstractProvider
             session_start();
         }
 
-        $options['code_verifier'] = $_SESSION['code_verifier'];
-
-        unset($_SESSION['code_verifier']);
+        if ($_SESSION['code_verifier']) {
+            $options['code_verifier'] = $_SESSION['code_verifier'];
+            unset($_SESSION['code_verifier']);
+        }
 
         $options['response_type'] = 'code';
 
