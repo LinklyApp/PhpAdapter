@@ -3,11 +3,12 @@
 namespace League\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Helpers\CodeChallenge;
+use League\OAuth2\Client\Provider\User\MementoUser;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
 
-class Memento extends AbstractProvider
+class MementoProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
@@ -75,7 +76,7 @@ class Memento extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        return $this->getApiDomainUrl() . '/api/users/info';
+        return $this->getDomainUrl() . '/connect/userinfo';
     }
 
     /**
@@ -154,7 +155,7 @@ class Memento extends AbstractProvider
      *
      * @param array $response
      * @param AccessToken $token
-     * @return \League\OAuth2\Client\Provider\ResourceOwnerInterface
+     * @return \League\OAuth2\Client\Provider\User\ResourceOwnerInterface
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {

@@ -1,8 +1,10 @@
 <?php
 
 
-namespace League\OAuth2\Client\Provider;
+namespace League\OAuth2\Client\Provider\User;
 
+use League\OAuth2\Client\Helpers\Helpers;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
 class MementoUser implements ResourceOwnerInterface
@@ -20,6 +22,10 @@ class MementoUser implements ResourceOwnerInterface
 
     public function __construct(array $response = array())
     {
+        /** TODO Remove json_decode when claims are fixed */
+        $response['billingAddress'] = json_decode($this->getValueByKey($response, 'billingAddress'), true);
+        $response['shippingAddress'] = json_decode($this->getValueByKey($response, 'shippingAddress'), true);
+
         $this->response = $response;
 
         $this->billingAddress = new Address($this->getValueByKey($this->response, 'billingAddress'));
