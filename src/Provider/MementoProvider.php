@@ -2,11 +2,14 @@
 
 namespace League\OAuth2\Client\Provider;
 
+use GuzzleHttp\Client as HttpClient;
 use League\OAuth2\Client\Helpers\CodeChallenge;
 use League\OAuth2\Client\Provider\User\MementoUser;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
+
+
 
 class MementoProvider extends AbstractProvider
 {
@@ -41,8 +44,21 @@ class MementoProvider extends AbstractProvider
 
             $this->environment = $options['environment'];
         }
-    }
 
+        if ($options['environment'] === 'local') {
+            $client_options = $this->getAllowedClientOptions($options);
+
+            // This allows locally signed ssl certificates
+            $httpClient = new HttpClient(
+                array_merge(
+                    array_intersect_key($options, array_flip($client_options)),
+                    ['verify' => false]
+                )
+            );
+
+            $this->setHttpClient($httpClient);
+        }
+    }
 
     /**
      * Get authorization url to begin OAuth flow
@@ -154,7 +170,6 @@ class MementoProvider extends AbstractProvider
      *
      * @param array $response
      * @param AccessToken $token
-     * @return \League\OAuth2\Client\Provider\User\ResourceOwnerInterface
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {

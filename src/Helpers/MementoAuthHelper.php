@@ -1,13 +1,16 @@
 <?php
 
-namespace League\OAuth2\Client\Provider;
+namespace League\OAuth2\Client\Helpers;
 
+use Firebase\JWT\JWT;
 use http\Exception;
+use League\OAuth2\Client\Provider\MementoProvider;
 use League\OAuth2\Client\Provider\User\MementoUser;
+use League\OAuth2\Client\Token\AccessToken;
 
 class MementoAuthHelper
 {
-    /** @var MementoProvider $provider  */
+    /** @var MementoProvider $provider */
     private $provider;
 
     public function __construct(MementoProvider $provider)
@@ -63,6 +66,26 @@ class MementoAuthHelper
         return $mementoUser;
     }
 
+    public function getSubject()
+    {
+        /** @var AccessToken $currentToken */
+        return $this->getJWTPayload()->sub;
+    }
+
+    public function getJWTPayload()
+    {
+        $token = $_SESSION['token'];
+
+        if (!$token) {
+            session_destroy();
+            $this->authorize();
+        }
+
+        $tks = explode('.', $token);
+        list($headb64, $bodyb64, $cryptob64) = $tks;
+        return JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64));
+    }
+
     private function renewTokenIfExpired()
     {
         try {
@@ -89,15 +112,13 @@ class MementoAuthHelper
         if ($name !== session_name()) {
             session_write_close();
             session_name($name);
-            if(!isset($_COOKIE[$name]))
-            {
+            if (!isset($_COOKIE[$name])) {
                 $_COOKIE[$name] = session_create_id();
             }
             session_id($_COOKIE[$name]);
             session_start();
         }
     }
-
 
 
     private function checkIfValidState()

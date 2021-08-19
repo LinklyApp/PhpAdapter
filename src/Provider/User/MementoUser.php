@@ -3,7 +3,6 @@
 
 namespace League\OAuth2\Client\Provider\User;
 
-use League\OAuth2\Client\Helpers\Helpers;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
