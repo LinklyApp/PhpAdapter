@@ -108,7 +108,6 @@ class MementoProvider extends AbstractProvider
 
         $_SESSION['code_verifier'] = $this->codeChallenge->verifier;
 
-
         return $options;
     }
 
@@ -118,7 +117,7 @@ class MementoProvider extends AbstractProvider
             session_start();
         }
 
-        if ($_SESSION['code_verifier']) {
+        if (isset($_SESSION['code_verifier'])) {
             $options['code_verifier'] = $_SESSION['code_verifier'];
             unset($_SESSION['code_verifier']);
         }

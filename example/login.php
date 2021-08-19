@@ -5,4 +5,5 @@ require './config.php';
 
 use League\OAuth2\Client\Provider\MementoAuthHelper;
 
-MementoAuthHelper::authorize();
+/** @var MementoAuthHelper $mementoAuthHelper */
+$mementoAuthHelper->authorize();
