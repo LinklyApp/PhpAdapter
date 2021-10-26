@@ -1,13 +1,15 @@
 <?php
 
-namespace League\OAuth2\Client\Provider;
+namespace Memento\OAuth2\Client\Provider;
 
 use GuzzleHttp\Client as HttpClient;
-use League\OAuth2\Client\Helpers\CodeChallenge;
-use League\OAuth2\Client\Provider\User\MementoUser;
+use Memento\OAuth2\Client\Helpers\CodeChallenge;
+use Memento\OAuth2\Client\Provider\User\MementoUser;
+use Psr\Http\Message\ResponseInterface;
+
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
-use Psr\Http\Message\ResponseInterface;
+use League\OAuth2\Client\Provider\AbstractProvider;
 
 
 

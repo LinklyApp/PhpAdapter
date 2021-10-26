@@ -1,6 +1,6 @@
 <?php
 
-namespace League\OAuth2\Client\Helpers;
+namespace Memento\OAuth2\Client\Helpers;
 
 class CodeChallenge
 {

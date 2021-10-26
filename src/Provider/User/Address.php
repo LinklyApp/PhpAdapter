@@ -1,7 +1,7 @@
 <?php
 
 
-namespace League\OAuth2\Client\Provider\User;
+namespace Memento\OAuth2\Client\Provider\User;
 
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 

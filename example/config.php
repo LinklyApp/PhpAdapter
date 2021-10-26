@@ -1,7 +1,7 @@
 <?php
 
-use League\OAuth2\Client\Helpers\MementoAuthHelper;
-use League\OAuth2\Client\Provider\MementoProvider;
+use Memento\OAuth2\Client\Helpers\MementoAuthHelper;
+use Memento\OAuth2\Client\Provider\MementoProvider;
 
 require '../src/Helpers/Helpers.php';
 

@@ -1,11 +1,12 @@
 <?php
 
-namespace League\OAuth2\Client\Helpers;
+namespace Memento\OAuth2\Client\Helpers;
 
 use Firebase\JWT\JWT;
 use http\Exception;
-use League\OAuth2\Client\Provider\MementoProvider;
-use League\OAuth2\Client\Provider\User\MementoUser;
+use Memento\OAuth2\Client\Provider\Invoice\MementoInvoice;
+use Memento\OAuth2\Client\Provider\MementoProvider;
+use Memento\OAuth2\Client\Provider\User\MementoUser;
 use League\OAuth2\Client\Token\AccessToken;
 
 class MementoAuthHelper
@@ -86,6 +87,11 @@ class MementoAuthHelper
         return JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64));
     }
 
+    public function sendInvoice(MementoInvoice $mementoInvoice)
+    {
+
+    }
+
     private function renewTokenIfExpired()
     {
         try {
@@ -109,15 +115,17 @@ class MementoAuthHelper
     {
         $name = 'MementoSession';
 
-        if ($name !== session_name()) {
-            session_write_close();
-            session_name($name);
-            if (!isset($_COOKIE[$name])) {
-                $_COOKIE[$name] = session_create_id();
-            }
-            session_id($_COOKIE[$name]);
-            session_start();
+        if ($name === session_name()) {
+            return;
         }
+
+        session_write_close();
+        session_name($name);
+        if (!isset($_COOKIE[$name])) {
+            $_COOKIE[$name] = session_create_id();
+        }
+        session_id($_COOKIE[$name]);
+        session_start();
     }
 
 
