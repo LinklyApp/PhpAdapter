@@ -17,14 +17,14 @@ class MementoProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    public $domain = 'https://accounts.mementobilling.com';
+    public $domain = 'https://api.mementobilling.com';
     public $apiDomain = 'https://api.mementobilling.com';
 
-    public $betaDomain = 'https://accounts.acc.mementobilling.com';
+    public $betaDomain = 'https://api.acc.mementobilling.com';
     public $betaApiDomain = 'https://api.acc.mementobilling.com';
 
     public $localDomain = 'https://localhost:5001';
-    public $localApiDomain = 'https://localhost:5005';
+    public $localApiDomain = 'https://localhost:5001';
 
     public $environment = 'prod';
     private $environmentOptions = ['prod', 'beta', 'local'];
