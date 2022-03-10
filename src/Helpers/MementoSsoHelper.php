@@ -9,7 +9,7 @@ use Memento\OAuth2\Client\Provider\MementoProvider;
 use Memento\OAuth2\Client\Provider\User\MementoUser;
 use League\OAuth2\Client\Token\AccessToken;
 
-class MementoAuthHelper
+class MementoSsoHelper
 {
     /** @var MementoProvider $provider */
     private $provider;

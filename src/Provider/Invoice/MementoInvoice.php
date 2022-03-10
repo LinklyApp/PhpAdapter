@@ -2,6 +2,8 @@
 
 namespace Memento\OAuth2\Client\Provider\Invoice;
 
+use Memento\OAuth2\Client\Helpers\GenericHelpers;
+
 class MementoInvoice
 {
     /**
@@ -17,7 +19,7 @@ class MementoInvoice
     /**
      * @return array
      */
-    public function getData(): array
+    public function toArray(): array
     {
         return $this->data;
     }
@@ -26,6 +28,7 @@ class MementoInvoice
     {
         $this->isRequired('reference');
     }
+
 
     private function isRequired($key)
     {

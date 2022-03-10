@@ -1,9 +1,8 @@
 <?php
 
-use Memento\OAuth2\Client\Helpers\MementoAuthHelper;
+use Memento\OAuth2\Client\Helpers\MementoSsoHelper;
+use Memento\OAuth2\Client\Helpers\MementoInvoiceHelper;
 use Memento\OAuth2\Client\Provider\MementoProvider;
-
-require '../src/Helpers/Helpers.php';
 
 $mementoClientId = 'test-oauth';
 $mementoClientSecret = 'secret';
@@ -17,4 +16,5 @@ $provider = new MementoProvider([
     'environment'       => $mementoEnvironment
 ]);
 
-$mementoAuthHelper = new MementoAuthHelper($provider);
+$mementoAuthHelper = new MementoSsoHelper($provider);
+$mementoInvoiceHelper = new MementoInvoiceHelper($provider);

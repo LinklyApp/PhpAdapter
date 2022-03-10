@@ -2,20 +2,23 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 require './config.php';
-require '../src/Helpers/Helpers.php';
+require '../src/Helpers/GenericHelpers.php';
 
-use Memento\OAuth2\Client\Helpers\MementoAuthHelper;
+use Memento\OAuth2\Client\Helpers\MementoSsoHelper;
 
 ?>
 
-<?php /** @var MementoAuthHelper $mementoAuthHelper */
+<?php /** @var MementoSsoHelper $mementoAuthHelper */
 if (!$mementoAuthHelper->isAuthenticated()) : ?>
-    <form action="login.php">
+    <form action="sso/login.php">
         <button>Login</button>
     </form>
 <?php else : ?>
-    <?php
-    $user = $mementoAuthHelper->getUser();
-    returnAsJson($user->toArray());
-    ?>
+    <form action="sso/index.php">
+        <button>See user info</button>
+    </form>
 <?php endif; ?>
+
+<form action="export-invoices/index.php">
+    <button>Client Credentials</button>
+</form>

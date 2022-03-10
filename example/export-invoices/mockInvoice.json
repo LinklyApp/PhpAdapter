@@ -1,0 +1,35 @@
+{
+  "userId": "fede83f6-f35b-447d-bf8e-bee61620bcbb",
+  "invoiceNumber": "47550265",
+  "orderNumber": "33400516",
+  "reference": "Mock Invoice",
+  "taxExclusiveAmount": 2900.60,
+  "taxAmount": 737.04,
+  "taxInclusiveAmount": 3509.73,
+  "issueDate": "2021-06-20T12:20:16.141306Z",
+  "dueDate": "2021-07-04T12:20:16.141306Z",
+  "paidAtDate": "2021-07-07T12:20:16.141306Z",
+  "invoiceLines": [
+    {
+      "sequenceNumber": 1,
+      "name": "Mock InvoiceLine 1",
+      "unitAmount": 571.18,
+      "quantity": 3,
+      "totalAmount": 1713.54
+    },
+    {
+      "sequenceNumber": 2,
+      "name": "Mock InvoiceLine 2",
+      "unitAmount": 852.93,
+      "quantity": 1,
+      "totalAmount": 852.93
+    },
+    {
+      "sequenceNumber": 3,
+      "name": "Mock InvoiceLine 3",
+      "unitAmount": 471.63,
+      "quantity": 2,
+      "totalAmount": 943.26
+    }
+  ]
+}

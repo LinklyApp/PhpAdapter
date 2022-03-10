@@ -2,8 +2,11 @@
 
 namespace Memento\OAuth2\Client\Provider;
 
+use Exception;
 use GuzzleHttp\Client as HttpClient;
 use Memento\OAuth2\Client\Helpers\CodeChallenge;
+use Memento\OAuth2\Client\Helpers\GenericHelpers;
+use Memento\OAuth2\Client\Provider\Invoice\MementoInvoice;
 use Memento\OAuth2\Client\Provider\User\MementoUser;
 use Psr\Http\Message\ResponseInterface;
 
@@ -25,6 +28,7 @@ class MementoProvider extends AbstractProvider
 
     public $localDomain = 'https://localhost:5001';
     public $localApiDomain = 'https://localhost:5001';
+//    public $localApiDomain = 'https://b058fafb-5a65-4db7-ad64-1e5632856836.mock.pstmn.io';
 
     public $environment = 'prod';
     private $environmentOptions = ['prod', 'beta', 'local'];
@@ -85,6 +89,11 @@ class MementoProvider extends AbstractProvider
         return $this->getDomainUrl() . '/connect/token';
     }
 
+    public function getBaseImportInvoiceUrl()
+    {
+        return $this->getApiDomainUrl() . '/api/import/invoices';
+    }
+
     /**
      * Get provider url to fetch user details
      *
@@ -95,6 +104,27 @@ class MementoProvider extends AbstractProvider
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
         return $this->getDomainUrl() . '/connect/userinfo';
+    }
+
+    public function sendInvoice(MementoInvoice $invoice, AccessToken $clientCredentialsAccessToken)
+    {
+        $method  = self::METHOD_POST;
+        $url     = $this->getBaseImportInvoiceUrl();
+
+        $options = ['body' => json_encode($invoice->toArray())];
+        $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsAccessToken, $options);
+
+        return $this->getParsedResponse($request);
+    }
+
+
+    public function getAuthorizationHeaders($token = null)
+    {
+        return [
+            'Authorization' => 'Bearer ' . $token,
+            'Accept'        => 'application/json',
+            'Content-Type'  => 'application/json',
+        ];
     }
 
     /**
@@ -150,7 +180,7 @@ class MementoProvider extends AbstractProvider
      *
      * @link   https://developer.github.com/v3/#client-errors
      * @link   https://developer.github.com/v3/oauth/#common-errors-for-the-access-token-request
-     * @throws IdentityProviderException
+     * @throws IdentityProviderException|Exception
      * @param ResponseInterface $response
      * @param array $data Parsed response data
      * @return void
@@ -162,8 +192,6 @@ class MementoProvider extends AbstractProvider
 //        } elseif (isset($data['error'])) {
 //            throw new Exception($response, $data);
 //        }
-
-        return true;
     }
 
 
