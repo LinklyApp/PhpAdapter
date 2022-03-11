@@ -21,6 +21,7 @@
     "autoload": {
         "psr-4": {
             "Memento\\OAuth2\\Client\\": "src/"
-        }
+        },
+        "files": [ "src/Helpers/helpers.php" ]
     }
 }

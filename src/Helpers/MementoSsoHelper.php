@@ -58,6 +58,11 @@ class MementoSsoHelper
         $_SESSION['token'] = $token;
     }
 
+    public function logout()
+    {
+        unset($_SESSION['token']);
+    }
+
     public function getUser(): MementoUser
     {
         $this->renewTokenIfExpired();

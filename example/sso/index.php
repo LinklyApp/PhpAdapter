@@ -2,17 +2,21 @@
 
 require __DIR__ . '/../../vendor/autoload.php';
 require '../config.php';
+require '../initialize.php';
 
-use Memento\OAuth2\Client\Helpers\GenericHelpers;
 use Memento\OAuth2\Client\Helpers\MementoSsoHelper;
 
-/** @var MementoSsoHelper $mementoAuthHelper */
-if (!$mementoAuthHelper->isAuthenticated()) {
-    header('Location: ' . '//' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']));
-} ?>
+/** @var MementoSsoHelper $mementoSsoHelper */
 
-
-<?php
-$user = $mementoAuthHelper->getUser();
-GenericHelpers::returnAsJson(['userInfo' => $user->toArray(), 'token' => $_SESSION['token']]);
 ?>
+<h1>Memento SSO Example</h1>
+<div><a href="../index.php">Back</a></div>
+
+<h2>Options</h2>
+<?php if (!$mementoSsoHelper->isAuthenticated()) : ?>
+    <div><a href="login.php">Login</a></div>
+<?php else : ?>
+    <div><a href="user-info.php">See user info</a></div>
+    <div><a href="token.php">Token</a></div>
+    <div><a href="logout.php">Logout</a></div>
+<?php endif; ?>
