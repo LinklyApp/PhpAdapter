@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use League\OAuth2\Client\Provider\AbstractProvider;
-
+use function Memento\OAuth2\Client\Helpers\dd;
 
 
 class MementoProvider extends AbstractProvider

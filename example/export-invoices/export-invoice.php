@@ -14,7 +14,13 @@ try {
     $invoiceAsJson = json_decode(file_get_contents('./mockInvoice.json'), true);
     $invoice = new MementoInvoice($invoiceAsJson);
     $response = $mementoInvoiceHelper->sendInvoice($invoice);
-    echo '<h1>Invoice successfully exported to Memento</h1>';
+
+    if ($response['errors']) {
+        echo '<h1>Error: Invoice was not exported</h1>';
+    } else {
+        echo '<h1>Invoice successfully exported to Memento</h1>';
+    }
+    dd($response);
 } catch (Exception $e) {
     dd($e);
 }
