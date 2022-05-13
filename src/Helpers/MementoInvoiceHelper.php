@@ -11,8 +11,7 @@ class MementoInvoiceHelper
     /**
      * @var MementoProvider
      */
-    private MementoProvider $provider;
-    private AccessToken $clientCredentialsToken;
+    private $provider;
 
     public function __construct(MementoProvider $provider)
     {
@@ -24,9 +23,10 @@ class MementoInvoiceHelper
         return $this->provider->getAccessToken('client_credentials', []);
     }
 
-    public function sendInvoice(MementoInvoice $invoice)
+    public function sendInvoice($invoice)
     {
-        $this->clientCredentialsToken = $this->getClientCredentialsAccessToken();
-        return $this->provider->sendInvoice($invoice, $this->clientCredentialsToken);
+        $clientCredentialsToken = $this->getClientCredentialsAccessToken();
+        return $this->provider->sendInvoice($clientCredentialsToken, $invoice);
     }
+
 }

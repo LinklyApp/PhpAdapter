@@ -4,16 +4,20 @@ namespace Memento\OAuth2\Client\Provider;
 
 use Exception;
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Exception\ClientException;
+use League\OAuth2\Client\Provider\AbstractProvider;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Token\AccessToken;
+use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Memento\OAuth2\Client\Helpers\CodeChallenge;
 use Memento\OAuth2\Client\Helpers\GenericHelpers;
+use Memento\OAuth2\Client\Provider\Exception\MementoProviderException;
 use Memento\OAuth2\Client\Provider\Invoice\MementoInvoice;
 use Memento\OAuth2\Client\Provider\User\MementoUser;
 use Psr\Http\Message\ResponseInterface;
-
-use League\OAuth2\Client\Token\AccessToken;
-use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
-use League\OAuth2\Client\Provider\AbstractProvider;
 use function Memento\OAuth2\Client\Helpers\dd;
+use function Memento\OAuth2\Client\Helpers\isJson;
+use function Memento\OAuth2\Client\Helpers\isXml;
 
 
 class MementoProvider extends AbstractProvider
@@ -106,26 +110,34 @@ class MementoProvider extends AbstractProvider
         return $this->getDomainUrl() . '/connect/userinfo';
     }
 
-    public function sendInvoice(MementoInvoice $invoice, AccessToken $clientCredentialsAccessToken)
+    public function sendInvoice($clientCredentialsToken, $data)
     {
-        $method  = self::METHOD_POST;
-        $url     = $this->getBaseImportInvoiceUrl();
+        $method = self::METHOD_POST;
+        $url = $this->getBaseImportInvoiceUrl();
+        $options = ['body' => $data];
 
-        $options = ['body' => json_encode($invoice->toArray())];
-        $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsAccessToken, $options);
+        if (isJson($data)) {
+            $url .= '/json';
+            $options['headers'] = ['Content-Type' => 'application/json'];
+        } elseif (isXml($data)) {
+            $url .= '/xml';
+            $options['headers'] = ['Content-Type' => 'application/xml'];
+        } else {
+            throw new Exception('Invalid invoice type');
+        }
 
+        $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsToken, $options);
         return $this->getParsedResponse($request);
     }
-
-
-    public function getAuthorizationHeaders($token = null)
-    {
-        return [
-            'Authorization' => 'Bearer ' . $token,
-            'Accept'        => 'application/json',
-            'Content-Type'  => 'application/json',
-        ];
-    }
+//
+//    public function getAuthorizationHeaders($token = null)
+//    {
+//        return [
+//            'Authorization' => 'Bearer ' . $token,
+//            'Accept' => 'application/json',
+//            'Content-Type' => 'application/json',
+//        ];
+//    }
 
     /**
      * Get the default scopes used by this provider.
@@ -187,11 +199,11 @@ class MementoProvider extends AbstractProvider
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
-//        if ($response->getStatusCode() >= 400) {
-//            throw new Exception($response, $data);
-//        } elseif (isset($data['error'])) {
-//            throw new Exception($response, $data);
-//        }
+        if ($response->getStatusCode() >= 400) {
+            throw MementoProviderException::clientException($response, $data);
+        } elseif (isset($data['error'])) {
+            throw MementoProviderException::oauthException($response, $data);
+        }
     }
 
 

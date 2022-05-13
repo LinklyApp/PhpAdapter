@@ -92,11 +92,6 @@ class MementoSsoHelper
         return JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64));
     }
 
-    public function sendInvoice(MementoInvoice $mementoInvoice)
-    {
-
-    }
-
     private function renewTokenIfExpired()
     {
         try {

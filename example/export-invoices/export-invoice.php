@@ -11,9 +11,11 @@ use function Memento\OAuth2\Client\Helpers\dd;
 /** @var $mementoInvoiceHelper MementoInvoiceHelper */
 
 try {
-    $invoiceAsJson = json_decode(file_get_contents('./mockInvoice.json'), true);
-    $invoice = new MementoInvoice($invoiceAsJson);
-    $response = $mementoInvoiceHelper->sendInvoice($invoice);
+//    $invoiceAsJson = file_get_contents('./mockInvoice.json');
+    $invoiceAsXml = file_get_contents('./mockInvoice.xml');
+
+//    $response = $mementoInvoiceHelper->sendInvoice($invoiceAsJson);
+    $response = $mementoInvoiceHelper->sendInvoice($invoiceAsXml);
 
     if ($response['errors']) {
         echo '<h1>Error: Invoice was not exported</h1>';
