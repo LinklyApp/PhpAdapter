@@ -2,7 +2,7 @@
   "receiverId": "fede83f6-f35b-447d-bf8e-bee61620bcbb",
   "invoiceNumber": "47550265",
   "orderNumber": "33400516",
-  "reference": "Mock Invoice",
+  "reference": "Mock JSON Invoice",
   "countryCode": "NL",
   "taxExclusiveAmount": 2900.60,
   "taxAmount": 737.04,

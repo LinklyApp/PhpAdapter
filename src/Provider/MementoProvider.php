@@ -129,15 +129,14 @@ class MementoProvider extends AbstractProvider
         $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsToken, $options);
         return $this->getParsedResponse($request);
     }
-//
-//    public function getAuthorizationHeaders($token = null)
-//    {
-//        return [
-//            'Authorization' => 'Bearer ' . $token,
-//            'Accept' => 'application/json',
-//            'Content-Type' => 'application/json',
-//        ];
-//    }
+
+    public function getAuthorizationHeaders($token = null)
+    {
+        return [
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json',
+        ];
+    }
 
     /**
      * Get the default scopes used by this provider.

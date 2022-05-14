@@ -12,5 +12,6 @@ require __DIR__ . '/../../vendor/autoload.php';
     <div><a href="../index.php">Back</a></div>
 
     <h2>Options</h2>
-    <div><a href="export-invoice.php">Export Invoice</a></div>
+    <div><a href="export-invoice-xml.php">Export Invoice XML</a></div>
+    <div><a href="export-invoice-json.php">Export Invoice JSON</a></div>
 

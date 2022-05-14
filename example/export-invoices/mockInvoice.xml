@@ -9,11 +9,11 @@
   <cbc:InvoiceTypeCode listID="UNCL1001" listAgencyID="6">380</cbc:InvoiceTypeCode>
   <cbc:DocumentCurrencyCode listID="ISO4217" listAgencyID="6">EUR</cbc:DocumentCurrencyCode>
   <cac:OrderReference>
-    <cbc:ID>Veel werkzamheden</cbc:ID>
+    <cbc:ID>Mock XML invoice</cbc:ID>
   </cac:OrderReference>
   <cac:BillingReference>
     <cac:InvoiceDocumentReference>
-      <cbc:ID>Veel werkzamheden</cbc:ID>
+      <cbc:ID>Mock XML invoice</cbc:ID>
     </cac:InvoiceDocumentReference>
   </cac:BillingReference>
   <cac:AdditionalDocumentReference>

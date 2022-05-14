@@ -7,8 +7,8 @@ use Memento\OAuth2\Client\Provider\MementoProvider;
 $provider = new MementoProvider([
     'clientId'          => $mementoClientId,
     'clientSecret'      => $mementoClientSecret,
-    'redirectUri'       => $mementoRedirectUri,
-    'environment'       => $mementoEnvironment
+    'environment'       => $mementoEnvironment,
+    'redirectUri'       => $mementoRedirectUri ?? null, // not required with just the client-credentials grant
 ]);
 
 $mementoSsoHelper = new MementoSsoHelper($provider);
