@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Invoice xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.1.xsd" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
   <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
-  
-  
   <cbc:ID>2021-0001</cbc:ID>
   <cbc:IssueDate>2021-08-11</cbc:IssueDate>
   <cbc:DueDate>2021-08-25</cbc:DueDate>
@@ -805,7 +803,7 @@ JUVPRgo=
         <cbc:CompanyID schemeID="0106">65485327</cbc:CompanyID>
       </cac:PartyLegalEntity>
       <cac:Contact>
-        <cbc:ElectronicMail>m.s.thullner@gmail.com</cbc:ElectronicMail>
+        <cbc:ElectronicMail>person@memento.com</cbc:ElectronicMail>
       </cac:Contact>
     </cac:Party>
   </cac:AccountingSupplierParty>
@@ -827,7 +825,7 @@ JUVPRgo=
         <cbc:CompanyID schemeID="0106">65485327</cbc:CompanyID>
       </cac:PartyLegalEntity>
       <cac:Contact>
-        <cbc:ElectronicMail>m.s.thullner@gmail.com</cbc:ElectronicMail>
+        <cbc:ElectronicMail>person@memento.com</cbc:ElectronicMail>
       </cac:Contact>
     </cac:Party>
   </cac:AccountingCustomerParty>
@@ -887,8 +885,8 @@ JUVPRgo=
       <cbc:Description>Appel</cbc:Description>
       <cbc:Name>Appel</cbc:Name>
       <cac:ClassifiedTaxCategory>
-        <cbc:ID schemeID="UNCL5305">S</cbc:ID>
-        <cbc:Percent>21.0</cbc:Percent>
+        <cbc:ID schemeID="UNCL5305">AA</cbc:ID>
+        <cbc:Percent>9.0</cbc:Percent>
         <cac:TaxScheme>
           <cbc:ID schemeID="UN/ECE 5153">VAT</cbc:ID>
         </cac:TaxScheme>

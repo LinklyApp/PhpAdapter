@@ -19,7 +19,7 @@ class MementoProviderException extends IdentityProviderException
     {
         return static::fromResponse(
             $response,
-            $data['message'] ?? $response->getReasonPhrase()
+            $data['title'] ?? $response->getReasonPhrase()
         );
     }
 
@@ -37,6 +37,16 @@ class MementoProviderException extends IdentityProviderException
             $response,
             $data['error'] ?? $response->getReasonPhrase()
         );
+    }
+
+    /**
+     * Returns the exception's response body.
+     *
+     * @return array|string
+     */
+    public function getResponseBody()
+    {
+        return json_decode($this->response, true);
     }
 
     /**

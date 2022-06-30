@@ -20,5 +20,5 @@ try {
     }
     dd($response);
 } catch (Exception $e) {
-    dd($e);
+    dd($e->getResponseBody());
 }

@@ -198,6 +198,8 @@ class MementoProvider extends AbstractProvider
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
+//        dd($response);
+
         if ($response->getStatusCode() >= 400) {
             throw MementoProviderException::clientException($response, $data);
         } elseif (isset($data['error'])) {
