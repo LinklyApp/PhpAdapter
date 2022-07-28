@@ -803,7 +803,7 @@ JUVPRgo=
         <cbc:CompanyID schemeID="0106">65485327</cbc:CompanyID>
       </cac:PartyLegalEntity>
       <cac:Contact>
-        <cbc:ElectronicMail>person@memento.com</cbc:ElectronicMail>
+        <cbc:ElectronicMail>company@memento.com</cbc:ElectronicMail>
       </cac:Contact>
     </cac:Party>
   </cac:AccountingSupplierParty>
@@ -825,7 +825,7 @@ JUVPRgo=
         <cbc:CompanyID schemeID="0106">65485327</cbc:CompanyID>
       </cac:PartyLegalEntity>
       <cac:Contact>
-        <cbc:ElectronicMail>person@memento.com</cbc:ElectronicMail>
+        <cbc:ElectronicMail>company@memento.com</cbc:ElectronicMail>
       </cac:Contact>
     </cac:Party>
   </cac:AccountingCustomerParty>
