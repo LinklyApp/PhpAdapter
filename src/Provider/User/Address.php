@@ -65,7 +65,7 @@ class Address
 
     public function getPhoneNumber()
     {
-        return $this->getValueByKey($this->address, 'getPhoneNumber');
+        return $this->getValueByKey($this->address, 'phoneNumber');
     }
 
     public function getStreetName()

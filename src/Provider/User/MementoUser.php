@@ -80,6 +80,11 @@ class MementoUser implements ResourceOwnerInterface
         return $this->getValueByKey($this->response, 'companyName');
     }
 
+    public function getPhoneNumber()
+    {
+        return $this->getValueByKey($this->response, 'phoneNumber');
+    }
+
     public function getBillingAddress()
     {
         return $this->billingAddress;
