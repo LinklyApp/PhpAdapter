@@ -78,6 +78,12 @@ class MementoSsoHelper
         return $this->getJWTPayload()->sub;
     }
 
+    public function getEmail()
+    {
+        /** @var AccessToken $currentToken */
+        return $this->getJWTPayload()->email;
+    }
+
     public function getJWTPayload()
     {
         $token = $_SESSION['token'];
