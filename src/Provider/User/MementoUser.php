@@ -75,6 +75,11 @@ class MementoUser implements ResourceOwnerInterface
         return $fullName;
     }
 
+    public function getCompanyName()
+    {
+        return $this->getValueByKey($this->response, 'companyName');
+    }
+
     public function getBillingAddress()
     {
         return $this->billingAddress;

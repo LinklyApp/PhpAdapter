@@ -63,6 +63,11 @@ class Address
         return $this->getValueByKey($this->address, 'companyName');
     }
 
+    public function getPhoneNumber()
+    {
+        return $this->getValueByKey($this->address, 'getPhoneNumber');
+    }
+
     public function getStreetName()
     {
         return $this->getValueByKey($this->address, 'street');
