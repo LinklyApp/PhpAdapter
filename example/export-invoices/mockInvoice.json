@@ -1,15 +1,17 @@
 {
   "customerId": "f6016719-fbf9-4ef0-beeb-8133064577eb",
-  "invoiceNumber": "47550265",
+  "invoiceNumber": "475502625",
   "orderNumber": "33400516",
   "reference": "Mock JSON Invoice2",
   "countryCode": "NL",
+  "ContractName": "243342",
   "taxExclusiveAmount": 2900.60,
   "taxAmount": 737.04,
   "taxInclusiveAmount": 3509.73,
+  "prePaidAmount": 3509.73,
+  "payableAmount":  0.00,
   "issueDate": "2022-06-20",
   "dueDate": "2022-07-04",
-  "paidAtDate": "2022-07-07",
   "lines": [
     {
       "sequenceNumber": 1,

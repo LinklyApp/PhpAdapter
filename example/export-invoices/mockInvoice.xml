@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Invoice xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.1.xsd" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
   <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
-  <cbc:ID>2021-0001</cbc:ID>
+  <cbc:ID>2021-0002</cbc:ID>
   <cbc:IssueDate>2021-08-11</cbc:IssueDate>
   <cbc:DueDate>2021-08-25</cbc:DueDate>
   <cbc:InvoiceTypeCode listID="UNCL1001" listAgencyID="6">380</cbc:InvoiceTypeCode>
@@ -14,6 +14,9 @@
       <cbc:ID>Mock XML invoice</cbc:ID>
     </cac:InvoiceDocumentReference>
   </cac:BillingReference>
+    <cac:ContractDocumentReference>
+        <cbc:ID>32434</cbc:ID>
+    </cac:ContractDocumentReference>
   <cac:AdditionalDocumentReference>
     <cbc:ID>2021-0001.pdf</cbc:ID>
     <cbc:DocumentType>PrimaryImage</cbc:DocumentType>
@@ -856,7 +859,8 @@ JUVPRgo=
     <cbc:TaxExclusiveAmount currencyID="EUR">25.0</cbc:TaxExclusiveAmount>
     <cbc:TaxInclusiveAmount currencyID="EUR">30.25</cbc:TaxInclusiveAmount>
     <cbc:AllowanceTotalAmount currencyID="EUR">0</cbc:AllowanceTotalAmount>
-    <cbc:PayableAmount currencyID="EUR">30.25</cbc:PayableAmount>
+    <cbc:PrepaidAmount currencyID="EUR">30.25</cbc:PrepaidAmount>
+    <cbc:PayableAmount currencyID="EUR">0</cbc:PayableAmount>
   </cac:LegalMonetaryTotal>
   <cac:InvoiceLine>
     <cbc:ID>1</cbc:ID>
