@@ -24,15 +24,14 @@ class MementoProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    public $domain = 'https://api.mementobilling.com';
-    public $apiDomain = 'https://api.mementobilling.com';
+    public $domain = 'https://api.linkly.me';
+    public $apiDomain = 'https://api.linkly.me';
 
-    public $betaDomain = 'https://api.acc.mementobilling.com';
-    public $betaApiDomain = 'https://api.acc.mementobilling.com';
+    public $betaDomain = 'https://api.acc.linkly.dev';
+    public $betaApiDomain = 'https://api.acc.linkly.dev';
 
     public $localDomain = 'https://localhost:5001';
     public $localApiDomain = 'https://localhost:5001';
-//    public $localApiDomain = 'https://b058fafb-5a65-4db7-ad64-1e5632856836.mock.pstmn.io';
 
     public $environment = 'prod';
     private $environmentOptions = ['prod', 'beta', 'local'];

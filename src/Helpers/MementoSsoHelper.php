@@ -45,6 +45,10 @@ class MementoSsoHelper
 
     public function callback()
     {
+        if ( isset($_GET['error'])) {
+            throw new \Exception($_GET['error']);
+        }
+
         if (!isset($_GET['code'])) {
             throw new \Exception('Code challenge is not set. Use login()');
         }

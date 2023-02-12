@@ -16,7 +16,8 @@
     ],
     "require": {
         "league/oauth2-client": "^2.6",
-        "firebase/php-jwt": "^5.4"
+        "firebase/php-jwt": "^5.4",
+        "php": ">=7.4"
     },
     "autoload": {
         "psr-4": {
