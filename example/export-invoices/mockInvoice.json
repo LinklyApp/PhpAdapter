@@ -18,7 +18,7 @@
       "name": "Mock InvoiceLine 1",
       "unitAmount": 571.18,
       "quantity": 3,
-      "totalAmount": 1713.54,
+      "lineAmount": 1713.54,
       "taxRatePercentage": 21
     },
     {
@@ -26,7 +26,7 @@
       "name": "Mock InvoiceLine 2",
       "unitAmount": 852.93,
       "quantity": 1,
-      "totalAmount": 852.93,
+      "lineAmount": 852.93,
       "taxRatePercentage": 0
     },
     {
@@ -34,7 +34,7 @@
       "name": "Mock InvoiceLine 3",
       "unitAmount": 471.63,
       "quantity": 2,
-      "totalAmount": 943.26,
+      "lineAmount": 943.26,
       "taxRatePercentage": 9
     }
   ],
