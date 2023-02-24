@@ -1,15 +1,15 @@
 <?php
 
-use Memento\OAuth2\Client\Helpers\MementoSsoHelper;
-use Memento\OAuth2\Client\Helpers\MementoInvoiceHelper;
-use Memento\OAuth2\Client\Provider\MementoProvider;
+use Linkly\OAuth2\Client\Helpers\LinklySsoHelper;
+use Linkly\OAuth2\Client\Helpers\LinklyInvoiceHelper;
+use Linkly\OAuth2\Client\Provider\LinklyProvider;
 
-$provider = new MementoProvider([
-    'clientId'          => $mementoClientId,
-    'clientSecret'      => $mementoClientSecret,
-    'environment'       => $mementoEnvironment,
-    'redirectUri'       => $mementoRedirectUri ?? null, // not required with just the client-credentials grant
+$provider = new LinklyProvider([
+    'clientId'          => $linklyClientId,
+    'clientSecret'      => $linklyClientSecret,
+    'environment'       => $linklyEnvironment,
+    'redirectUri'       => $linklyRedirectUri ?? null, // not required with just the client-credentials grant
 ]);
 
-$mementoSsoHelper = new MementoSsoHelper($provider);
-$mementoInvoiceHelper = new MementoInvoiceHelper($provider);
+$linklySsoHelper = new LinklySsoHelper($provider);
+$linklyInvoiceHelper = new LinklyInvoiceHelper($provider);

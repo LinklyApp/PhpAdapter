@@ -1,19 +1,19 @@
 <?php
 
-namespace Memento\OAuth2\Client\Helpers;
+namespace Linkly\OAuth2\Client\Helpers;
 
 use League\OAuth2\Client\Token\AccessToken;
-use Memento\OAuth2\Client\Provider\Invoice\MementoInvoice;
-use Memento\OAuth2\Client\Provider\MementoProvider;
+use Linkly\OAuth2\Client\Provider\Invoice\LinklyInvoice;
+use Linkly\OAuth2\Client\Provider\LinklyProvider;
 
-class MementoInvoiceHelper
+class LinklyInvoiceHelper
 {
     /**
-     * @var MementoProvider
+     * @var LinklyProvider
      */
     private $provider;
 
-    public function __construct(MementoProvider $provider)
+    public function __construct(LinklyProvider $provider)
     {
         $this->provider = $provider;
     }

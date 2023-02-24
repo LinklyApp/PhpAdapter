@@ -1,12 +1,12 @@
 {
-    "name": "thullner/oath2-memento",
-    "description": "Memento OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+    "name": "thullner/oath2-linkly",
+    "description": "Linkly OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
     "license": "MIT",
     "keywords": [
         "oauth2",
         "authorization",
         "authentication",
-        "memento"
+        "linkly"
     ],
     "authors": [
         {
@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Memento\\OAuth2\\Client\\": "src/"
+            "Linkly\\OAuth2\\Client\\": "src/"
         },
         "files": [ "src/Helpers/helpers.php" ]
     }

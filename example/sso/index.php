@@ -4,16 +4,16 @@ require __DIR__ . '/../../vendor/autoload.php';
 require '../config.php';
 require '../initialize.php';
 
-use Memento\OAuth2\Client\Helpers\MementoSsoHelper;
+use Linkly\OAuth2\Client\Helpers\LinklySsoHelper;
 
-/** @var MementoSsoHelper $mementoSsoHelper */
+/** @var LinklySsoHelper $linklySsoHelper */
 
 ?>
-<h1>Memento SSO Example</h1>
+<h1>Linkly SSO Example</h1>
 <div><a href="../index.php">Back</a></div>
 
 <h2>Options</h2>
-<?php if (!$mementoSsoHelper->isAuthenticated()) : ?>
+<?php if (!$linklySsoHelper->isAuthenticated()) : ?>
     <div><a href="login.php">Login</a></div>
 <?php else : ?>
     <div><a href="user-info.php">See user info</a></div>

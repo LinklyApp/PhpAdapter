@@ -1,10 +1,10 @@
-# Memento Provider for OAuth 2.0 Client
+# Linkly Provider for OAuth 2.0 Client
 ## Installation
 
 To install, use composer:
 
 ```
-composer require thullner/oauth2-memento
+composer require thullner/oauth2-linkly
 ```
 
 Example usage:

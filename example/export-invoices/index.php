@@ -1,6 +1,6 @@
 <?php
 
-use function Memento\OAuth2\Client\Helpers\dd;
+use function Linkly\OAuth2\Client\Helpers\dd;
 
 require __DIR__ . '/../../vendor/autoload.php';
 

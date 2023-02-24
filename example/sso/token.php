@@ -4,12 +4,12 @@ require __DIR__ . '/../../vendor/autoload.php';
 require '../config.php';
 require '../initialize.php';
 
-use Memento\OAuth2\Client\Helpers\MementoSsoHelper;
-use function Memento\OAuth2\Client\Helpers\returnAsJson;
+use Linkly\OAuth2\Client\Helpers\LinklySsoHelper;
+use function Linkly\OAuth2\Client\Helpers\returnAsJson;
 
-/** @var MementoSsoHelper $mementoSsoHelper */
+/** @var LinklySsoHelper $linklySsoHelper */
 
-if (!$mementoSsoHelper->isAuthenticated()) {
+if (!$linklySsoHelper->isAuthenticated()) {
     header('Location: ' . '//' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']));
     exit;
 } ?>

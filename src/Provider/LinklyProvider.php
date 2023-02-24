@@ -1,6 +1,6 @@
 <?php
 
-namespace Memento\OAuth2\Client\Provider;
+namespace Linkly\OAuth2\Client\Provider;
 
 use Exception;
 use GuzzleHttp\Client as HttpClient;
@@ -9,18 +9,16 @@ use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
-use Memento\OAuth2\Client\Helpers\CodeChallenge;
-use Memento\OAuth2\Client\Helpers\GenericHelpers;
-use Memento\OAuth2\Client\Provider\Exception\MementoProviderException;
-use Memento\OAuth2\Client\Provider\Invoice\MementoInvoice;
-use Memento\OAuth2\Client\Provider\User\MementoUser;
+use Linkly\OAuth2\Client\Helpers\CodeChallenge;
+use Linkly\OAuth2\Client\Provider\Exception\LinklyProviderException;
+use Linkly\OAuth2\Client\Provider\User\LinklyUser;
 use Psr\Http\Message\ResponseInterface;
-use function Memento\OAuth2\Client\Helpers\dd;
-use function Memento\OAuth2\Client\Helpers\isJson;
-use function Memento\OAuth2\Client\Helpers\isXml;
+use function Linkly\OAuth2\Client\Helpers\dd;
+use function Linkly\OAuth2\Client\Helpers\isJson;
+use function Linkly\OAuth2\Client\Helpers\isXml;
 
 
-class MementoProvider extends AbstractProvider
+class LinklyProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
@@ -147,7 +145,7 @@ class MementoProvider extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['openid profile offline_access memento-import-api'];
+        return ['openid profile offline_access linkly-import-api'];
     }
 
     protected function getAuthorizationParameters(array $options)
@@ -200,9 +198,9 @@ class MementoProvider extends AbstractProvider
 //        dd($response);
 
         if ($response->getStatusCode() >= 400) {
-            throw MementoProviderException::clientException($response, $data);
+            throw LinklyProviderException::clientException($response, $data);
         } elseif (isset($data['error'])) {
-            throw MementoProviderException::oauthException($response, $data);
+            throw LinklyProviderException::oauthException($response, $data);
         }
     }
 
@@ -215,7 +213,7 @@ class MementoProvider extends AbstractProvider
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        $user = new MementoUser($response);
+        $user = new LinklyUser($response);
         return $user->setDomain($this->getApiDomainUrl());
     }
 

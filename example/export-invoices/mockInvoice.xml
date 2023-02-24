@@ -811,7 +811,7 @@
                 <cbc:CompanyID schemeID="0106">65485327</cbc:CompanyID>
             </cac:PartyLegalEntity>
             <cac:Contact>
-                <cbc:ElectronicMail>company@memento.com</cbc:ElectronicMail>
+                <cbc:ElectronicMail>company@linkly.me</cbc:ElectronicMail>
             </cac:Contact>
         </cac:Party>
     </cac:AccountingSupplierParty>
@@ -833,7 +833,7 @@
                 <cbc:CompanyID schemeID="0106">65485327</cbc:CompanyID>
             </cac:PartyLegalEntity>
             <cac:Contact>
-                <cbc:ElectronicMail>company@memento.com</cbc:ElectronicMail>
+                <cbc:ElectronicMail>company@linkly.me</cbc:ElectronicMail>
             </cac:Contact>
         </cac:Party>
     </cac:AccountingCustomerParty>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Memento\OAuth2\Client\Helpers;
+namespace Linkly\OAuth2\Client\Helpers;
 
 function dd($variable)
 {

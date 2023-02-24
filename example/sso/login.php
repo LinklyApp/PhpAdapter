@@ -4,7 +4,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 require '../config.php';
 require '../initialize.php';
 
-use Memento\OAuth2\Client\Helpers\MementoSsoHelper;
+use Linkly\OAuth2\Client\Helpers\LinklySsoHelper;
 
-/** @var MementoSsoHelper $mementoSsoHelper */
-$mementoSsoHelper->authorize();
+/** @var LinklySsoHelper $linklySsoHelper */
+$linklySsoHelper->authorize();

@@ -1,11 +1,11 @@
 <?php
 
-namespace Memento\OAuth2\Client\Provider\Exception;
+namespace Linkly\OAuth2\Client\Provider\Exception;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Message\ResponseInterface;
 
-class MementoProviderException extends IdentityProviderException
+class LinklyProviderException extends IdentityProviderException
 {
     /**
      * Creates client exception from response.

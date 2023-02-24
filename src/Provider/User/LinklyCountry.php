@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Memento\OAuth2\Client\Provider\User;
+namespace Linkly\OAuth2\Client\Provider\User;
 
 
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
-class Country
+class LinklyCountry
 {
     use ArrayAccessorTrait;
 

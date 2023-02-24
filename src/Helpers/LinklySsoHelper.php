@@ -1,23 +1,23 @@
 <?php
 
-namespace Memento\OAuth2\Client\Helpers;
+namespace Linkly\OAuth2\Client\Helpers;
 
 use Firebase\JWT\JWT;
 use http\Exception;
-use Memento\OAuth2\Client\Provider\Invoice\MementoInvoice;
-use Memento\OAuth2\Client\Provider\MementoProvider;
-use Memento\OAuth2\Client\Provider\User\MementoUser;
+use Linkly\OAuth2\Client\Provider\Invoice\LinklyInvoice;
+use Linkly\OAuth2\Client\Provider\LinklyProvider;
+use Linkly\OAuth2\Client\Provider\User\LinklyUser;
 use League\OAuth2\Client\Token\AccessToken;
 
-class MementoSsoHelper
+class LinklySsoHelper
 {
-    /** @var MementoProvider $provider */
+    /** @var LinklyProvider $provider */
     private $provider;
 
-    public function __construct(MementoProvider $provider)
+    public function __construct(LinklyProvider $provider)
     {
         $this->provider = $provider;
-        $this->startMementoSession();
+        $this->startLinklySession();
     }
 
     public function authorize()
@@ -67,13 +67,13 @@ class MementoSsoHelper
         unset($_SESSION['token']);
     }
 
-    public function getUser(): MementoUser
+    public function getUser(): LinklyUser
     {
         $this->renewTokenIfExpired();
 
-        /** @var MementoUser $mementoUser */
-        $mementoUser = $this->provider->getResourceOwner($_SESSION['token']);
-        return $mementoUser;
+        /** @var LinklyUser $linklyUser */
+        $linklyUser = $this->provider->getResourceOwner($_SESSION['token']);
+        return $linklyUser;
     }
 
     public function getSubject()
@@ -121,9 +121,9 @@ class MementoSsoHelper
         }
     }
 
-    private function startMementoSession()
+    private function startLinklySession()
     {
-        $name = 'MementoSession';
+        $name = 'LinklySession';
 
         if ($name === session_name()) {
             return;

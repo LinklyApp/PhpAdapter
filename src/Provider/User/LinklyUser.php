@@ -1,22 +1,22 @@
 <?php
 
 
-namespace Memento\OAuth2\Client\Provider\User;
+namespace Linkly\OAuth2\Client\Provider\User;
 
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
-class MementoUser implements ResourceOwnerInterface
+class LinklyUser implements ResourceOwnerInterface
 {
     use ArrayAccessorTrait;
 
     protected $domain;
     protected $response;
 
-    /** @var Address  */
+    /** @var LinklyAddress  */
     private $billingAddress;
 
-    /** @var Address  */
+    /** @var LinklyAddress  */
     private $shippingAddress;
 
     public function __construct(array $response = array())
@@ -27,8 +27,8 @@ class MementoUser implements ResourceOwnerInterface
 
         $this->response = $response;
 
-        $this->billingAddress = new Address($this->getValueByKey($this->response, 'billingAddress'));
-        $this->shippingAddress = new Address($this->getValueByKey($this->response, 'shippingAddress'));
+        $this->billingAddress = new LinklyAddress($this->getValueByKey($this->response, 'billingAddress'));
+        $this->shippingAddress = new LinklyAddress($this->getValueByKey($this->response, 'shippingAddress'));
     }
 
     public function getId()
@@ -106,7 +106,7 @@ class MementoUser implements ResourceOwnerInterface
      *
      * @param string $domain
      *
-     * @return MementoUser
+     * @return LinklyUser
      */
     public function setDomain($domain)
     {
