@@ -1,6 +1,6 @@
 {
-    "name": "thullner/oath2-linkly",
-    "description": "Linkly OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+    "name": "linkly-app/php-adapter",
+    "description": "Linkly PHP Adapter to connect to the Linkly API",
     "license": "MIT",
     "keywords": [
         "oauth2",
