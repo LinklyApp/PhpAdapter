@@ -1,10 +1,10 @@
-# Linkly Provider for OAuth 2.0 Client
+# Linkly PHP Adapter to connect to the Linkly API
 ## Installation
 
 To install, use composer:
 
 ```
-composer require thullner/oauth2-linkly
+composer require linkly-app/php-adapter
 ```
 
 Example usage:
