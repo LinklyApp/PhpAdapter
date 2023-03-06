@@ -145,7 +145,7 @@ class LinklyProvider extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['openid profile offline_access linkly-import-api'];
+        return ['openid profile offline_access linkly-external-api'];
     }
 
     protected function getAuthorizationParameters(array $options)
