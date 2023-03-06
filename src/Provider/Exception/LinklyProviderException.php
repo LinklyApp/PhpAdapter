@@ -4,6 +4,7 @@ namespace Linkly\OAuth2\Client\Provider\Exception;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Psr\Http\Message\ResponseInterface;
+use function Linkly\OAuth2\Client\Helpers\dd;
 
 class LinklyProviderException extends IdentityProviderException
 {
@@ -19,7 +20,7 @@ class LinklyProviderException extends IdentityProviderException
     {
         return static::fromResponse(
             $response,
-            $data['title'] ?? $response->getReasonPhrase()
+            $data['error'] ?? $response->getReasonPhrase()
         );
     }
 

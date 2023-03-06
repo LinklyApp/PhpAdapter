@@ -4,6 +4,8 @@ namespace Linkly\OAuth2\Client\Helpers;
 
 use Firebase\JWT\JWT;
 use http\Exception;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use Linkly\OAuth2\Client\Provider\Exception\LinklyProviderException;
 use Linkly\OAuth2\Client\Provider\Invoice\LinklyInvoice;
 use Linkly\OAuth2\Client\Provider\LinklyProvider;
 use Linkly\OAuth2\Client\Provider\User\LinklyUser;
@@ -102,9 +104,13 @@ class LinklySsoHelper
         return JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64));
     }
 
-    public function verifyClient()
+    /**
+     * @throws LinklyProviderException
+     * @throws IdentityProviderException
+     */
+    public function verifyClientCredentials()
     {
-        return $this->provider->verifyClient();
+        return $this->provider->verifyClientCredentials();
     }
 
     private function renewTokenIfExpired()

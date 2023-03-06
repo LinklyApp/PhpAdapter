@@ -95,6 +95,11 @@ class LinklyProvider extends AbstractProvider
         return $this->getApiDomainUrl() . '/external-api/invoices';
     }
 
+    public function getBaseExternalClientUrl()
+    {
+        return $this->getApiDomainUrl() . '/external-api/clients';
+    }
+
     /**
      * Get provider url to fetch user details
      *
@@ -107,6 +112,10 @@ class LinklyProvider extends AbstractProvider
         return $this->getDomainUrl() . '/connect/userinfo';
     }
 
+    /**
+     * @return array
+     * @throws LinklyProviderException|IdentityProviderException
+     */
     public function sendInvoice($clientCredentialsToken, $data)
     {
         $method = self::METHOD_POST;
@@ -127,10 +136,15 @@ class LinklyProvider extends AbstractProvider
         return $this->getParsedResponse($request);
     }
 
-    public function verifyClient()
+
+    /**
+     * @return array
+     * @throws LinklyProviderException|IdentityProviderException
+     */
+    public function verifyClientCredentials()
     {
         $method = self::METHOD_POST;
-        $url = $this->getBaseExternalInvoiceUrl();
+        $url = $this->getBaseExternalClientUrl() . '/verify';
 
         $clientCredentialsToken = $this->getAccessToken('client_credentials');
 
@@ -157,7 +171,7 @@ class LinklyProvider extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['openid profile offline_access linkly-external-api'];
+        return ['openid profile offline_access'];
     }
 
     protected function getAuthorizationParameters(array $options)
@@ -200,15 +214,13 @@ class LinklyProvider extends AbstractProvider
      *
      * @link   https://developer.github.com/v3/#client-errors
      * @link   https://developer.github.com/v3/oauth/#common-errors-for-the-access-token-request
-     * @throws IdentityProviderException|Exception
+     * @throws LinklyProviderException|IdentityProviderException
      * @param ResponseInterface $response
      * @param array $data Parsed response data
      * @return void
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
-//        dd($response);
-
         if ($response->getStatusCode() >= 400) {
             throw LinklyProviderException::clientException($response, $data);
         } elseif (isset($data['error'])) {
