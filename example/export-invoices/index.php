@@ -1,10 +1,9 @@
 <?php
 
+use Linkly\OAuth2\Client\Helpers\LinklyInvoiceHelper;
 use function Linkly\OAuth2\Client\Helpers\dd;
 
 require __DIR__ . '/../../vendor/autoload.php';
-
-
 ?>
 
 <h1>Export invoice Example</h1>

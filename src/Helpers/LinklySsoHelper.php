@@ -102,6 +102,11 @@ class LinklySsoHelper
         return JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64));
     }
 
+    public function verifyClient()
+    {
+        return $this->provider->verifyClient();
+    }
+
     private function renewTokenIfExpired()
     {
         try {

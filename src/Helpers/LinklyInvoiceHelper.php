@@ -23,6 +23,11 @@ class LinklyInvoiceHelper
         return $this->provider->getAccessToken('client_credentials', []);
     }
 
+    public function verifyClient()
+    {
+        return $this->provider->verifyClient();
+    }
+
     public function sendInvoice($invoice)
     {
         $clientCredentialsToken = $this->getClientCredentialsAccessToken();

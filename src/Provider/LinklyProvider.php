@@ -90,9 +90,9 @@ class LinklyProvider extends AbstractProvider
         return $this->getDomainUrl() . '/connect/token';
     }
 
-    public function getBaseImportInvoiceUrl()
+    public function getBaseExternalInvoiceUrl()
     {
-        return $this->getApiDomainUrl() . '/api/import/invoices';
+        return $this->getApiDomainUrl() . '/external-api/invoices';
     }
 
     /**
@@ -110,7 +110,7 @@ class LinklyProvider extends AbstractProvider
     public function sendInvoice($clientCredentialsToken, $data)
     {
         $method = self::METHOD_POST;
-        $url = $this->getBaseImportInvoiceUrl();
+        $url = $this->getBaseExternalInvoiceUrl();
         $options = ['body' => $data];
 
         if (isJson($data)) {
@@ -126,6 +126,18 @@ class LinklyProvider extends AbstractProvider
         $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsToken, $options);
         return $this->getParsedResponse($request);
     }
+
+    public function verifyClient()
+    {
+        $method = self::METHOD_POST;
+        $url = $this->getBaseExternalInvoiceUrl();
+
+        $clientCredentialsToken = $this->getAccessToken('client_credentials');
+
+        $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsToken);
+        return $this->getParsedResponse($request);
+    }
+
 
     public function getAuthorizationHeaders($token = null)
     {
