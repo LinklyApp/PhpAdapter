@@ -1,8 +1,8 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
-require 'config.php';
-require 'initialize.php';
+require __DIR__ . '/../../vendor/autoload.php';
+require '../config.php';
+require '../initialize.php';
 
 /** @var $linklyInvoiceHelper LinklyInvoiceHelper */
 

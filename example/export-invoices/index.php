@@ -14,3 +14,5 @@ require __DIR__ . '/../../vendor/autoload.php';
 <div><a href="export-invoice-json.php">Export Invoice JSON</a></div>
 <div><a href="export-invoice-xml.php">Export Invoice XML</a></div>
 
+<div><a href="verify-client-credentials.php">Verify client-credentials</a></div>
+
