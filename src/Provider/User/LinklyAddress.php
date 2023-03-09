@@ -24,6 +24,16 @@ class LinklyAddress
         $this->country = new LinklyCountry($this->getValueByKey($this->address, 'country'));
     }
 
+    public function getId()
+    {
+        return $this->getValueByKey($this->address, 'id');
+    }
+
+    public function getVersion()
+    {
+        return $this->getValueByKey($this->address, 'version');
+    }
+
     public function getFirstName()
     {
         return $this->getValueByKey($this->address, 'firstName');
