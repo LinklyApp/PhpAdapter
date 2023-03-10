@@ -47,7 +47,7 @@ class LinklySsoHelper
 
     public function callback()
     {
-        if ( isset($_GET['error'])) {
+        if (isset($_GET['error'])) {
             throw new \Exception($_GET['error']);
         }
 
@@ -111,6 +111,18 @@ class LinklySsoHelper
     public function verifyClientCredentials()
     {
         return $this->provider->verifyClientCredentials();
+    }
+
+    /**
+     * @param array $addressData All of "billingAddressId", "billingAddressVersion", "shippingAddressId", and "shippingAddressVersion".
+     * @return array
+     * @throws LinklyProviderException
+     * @throws IdentityProviderException
+     */
+    public function hasAddressBeenChanged(array $addressData)
+    {
+        $this->renewTokenIfExpired();
+        return $this->provider->hasAddressBeenChanged($_SESSION['token'], $addressData);
     }
 
     private function renewTokenIfExpired()

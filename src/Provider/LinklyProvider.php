@@ -100,6 +100,11 @@ class LinklyProvider extends AbstractProvider
         return $this->getApiDomainUrl() . '/external-api/clients';
     }
 
+    public function getBaseExternalAddressUrl()
+    {
+        return $this->getApiDomainUrl() . '/external-api/addresses';
+    }
+
     /**
      * Get provider url to fetch user details
      *
@@ -136,6 +141,26 @@ class LinklyProvider extends AbstractProvider
         return $this->getParsedResponse($request);
     }
 
+    /**
+     * @param array $addressData All of "billingAddressId", "billingAddressVersion", "shippingAddressId", and "shippingAddressVersion".
+     * @return array
+     * @throws LinklyProviderException|IdentityProviderException
+     */
+    public function hasAddressBeenChanged($token, array $addressData)
+    {
+        $url = $this->getBaseExternalAddressUrl() . '/has-changed';
+
+
+        $options = [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode($addressData)
+        ];
+
+        $request = $this->getAuthenticatedRequest(self::METHOD_POST, $url, $token, $options);
+        return $this->getParsedResponse($request);
+    }
 
     /**
      * @return array
@@ -171,7 +196,7 @@ class LinklyProvider extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        return ['openid profile offline_access'];
+        return ['openid profile offline_access linkly-external-api'];
     }
 
     protected function getAuthorizationParameters(array $options)

@@ -5,6 +5,7 @@ require '../config.php';
 require '../initialize.php';
 
 use Linkly\OAuth2\Client\Helpers\LinklySsoHelper;
+use function Linkly\OAuth2\Client\Helpers\dd;
 
 /** @var LinklySsoHelper $linklySsoHelper */
 
@@ -19,4 +20,14 @@ use Linkly\OAuth2\Client\Helpers\LinklySsoHelper;
     <div><a href="user-info.php">See user info</a></div>
     <div><a href="token.php">Token</a></div>
     <div><a href="logout.php">Logout</a></div>
+
+    <div>Has address been changed: <?php
+        $user = $linklySsoHelper->getUser();
+
+        $addressData['billingAddressId'] = $user->getBillingAddress()->getId();
+        $addressData['billingAddressVersion'] = $user->getBillingAddress()->getVersion();
+        $addressData['shippingAddressId'] = $user->getShippingAddress()->getId();
+        $addressData['shippingAddressVersion'] = $user->getShippingAddress()->getVersion();
+
+        echo $linklySsoHelper->hasAddressBeenChanged($addressData)['message'] ?></div>
 <?php endif; ?>
