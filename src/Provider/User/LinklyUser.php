@@ -5,6 +5,7 @@ namespace Linkly\OAuth2\Client\Provider\User;
 
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
+use function Linkly\OAuth2\Client\Helpers\dd;
 
 class LinklyUser implements ResourceOwnerInterface
 {
