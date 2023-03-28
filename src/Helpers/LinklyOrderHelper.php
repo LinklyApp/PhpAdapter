@@ -5,10 +5,9 @@ namespace Linkly\OAuth2\Client\Helpers;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Linkly\OAuth2\Client\Provider\Exception\LinklyProviderException;
-use Linkly\OAuth2\Client\Provider\Invoice\LinklyInvoice;
 use Linkly\OAuth2\Client\Provider\LinklyProvider;
 
-class LinklyInvoiceHelper
+class LinklyOrderHelper
 {
     /**
      * @var LinklyProvider
@@ -33,6 +32,16 @@ class LinklyInvoiceHelper
     public function verifyClientCredentials()
     {
         return $this->provider->verifyClientCredentials();
+    }
+
+    /**
+     * @return array
+     * @throws LinklyProviderException|IdentityProviderException
+     */
+    public function sendOrder($invoice)
+    {
+        $clientCredentialsToken = $this->getClientCredentialsAccessToken();
+        return $this->provider->sendOrder($clientCredentialsToken, $invoice);
     }
 
     /**

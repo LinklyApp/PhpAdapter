@@ -1,6 +1,6 @@
 <?php
 
-use Linkly\OAuth2\Client\Helpers\LinklyInvoiceHelper;
+use Linkly\OAuth2\Client\Helpers\LinklyOrderHelper;
 use function Linkly\OAuth2\Client\Helpers\dd;
 
 require __DIR__ . '/../../vendor/autoload.php';

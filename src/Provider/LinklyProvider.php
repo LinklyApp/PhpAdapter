@@ -121,7 +121,7 @@ class LinklyProvider extends AbstractProvider
      * @return array
      * @throws LinklyProviderException|IdentityProviderException
      */
-    public function sendInvoice($clientCredentialsToken, $data)
+    public function sendOrder($clientCredentialsToken, $data)
     {
         $method = self::METHOD_POST;
         $url = $this->getBaseExternalOrderUrl();
@@ -130,7 +130,25 @@ class LinklyProvider extends AbstractProvider
         if (isJson($data)) {
             $url .= '/json';
             $options['headers'] = ['Content-Type' => 'application/json'];
-        } elseif (isXml($data)) {
+        } else {
+            throw new Exception('Order needs to be json encodable');
+        }
+
+        $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsToken, $options);
+        return $this->getParsedResponse($request);
+    }
+
+    /**
+     * @return array
+     * @throws LinklyProviderException|IdentityProviderException
+     */
+    public function sendInvoice($clientCredentialsToken, $data)
+    {
+        $method = self::METHOD_POST;
+        $url = $this->getBaseExternalOrderUrl();
+        $options = ['body' => $data];
+
+        if (isXml($data)) {
             $url .= '/xml';
             $options['headers'] = ['Content-Type' => 'application/xml'];
         } else {

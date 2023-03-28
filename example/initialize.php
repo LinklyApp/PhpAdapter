@@ -1,7 +1,7 @@
 <?php
 
 use Linkly\OAuth2\Client\Helpers\LinklySsoHelper;
-use Linkly\OAuth2\Client\Helpers\LinklyInvoiceHelper;
+use Linkly\OAuth2\Client\Helpers\LinklyOrderHelper;
 use Linkly\OAuth2\Client\Provider\LinklyProvider;
 
 $provider = new LinklyProvider([
@@ -12,4 +12,4 @@ $provider = new LinklyProvider([
 ]);
 
 $linklySsoHelper = new LinklySsoHelper($provider);
-$linklyInvoiceHelper = new LinklyInvoiceHelper($provider);
+$linklyInvoiceHelper = new LinklyOrderHelper($provider);
