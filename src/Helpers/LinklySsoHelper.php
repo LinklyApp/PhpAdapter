@@ -3,10 +3,7 @@
 namespace Linkly\OAuth2\Client\Helpers;
 
 use Firebase\JWT\JWT;
-use http\Exception;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use Linkly\OAuth2\Client\Provider\Exception\LinklyProviderException;
-use Linkly\OAuth2\Client\Provider\Invoice\LinklyInvoice;
 use Linkly\OAuth2\Client\Provider\LinklyProvider;
 use Linkly\OAuth2\Client\Provider\User\LinklyUser;
 use League\OAuth2\Client\Token\AccessToken;
@@ -105,7 +102,6 @@ class LinklySsoHelper
     }
 
     /**
-     * @throws LinklyProviderException
      * @throws IdentityProviderException
      */
     public function verifyClientCredentials()
@@ -116,7 +112,6 @@ class LinklySsoHelper
     /**
      * @param array $addressData All of "billingAddressId", "billingAddressVersion", "shippingAddressId", and "shippingAddressVersion".
      * @return array
-     * @throws LinklyProviderException
      * @throws IdentityProviderException
      */
     public function hasAddressBeenChanged(array $addressData)

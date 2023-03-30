@@ -4,13 +4,11 @@ namespace Linkly\OAuth2\Client\Provider;
 
 use Exception;
 use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Exception\ClientException;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Linkly\OAuth2\Client\Helpers\CodeChallenge;
-use Linkly\OAuth2\Client\Provider\Exception\LinklyProviderException;
 use Linkly\OAuth2\Client\Provider\User\LinklyUser;
 use Psr\Http\Message\ResponseInterface;
 use function Linkly\OAuth2\Client\Helpers\dd;
@@ -119,7 +117,7 @@ class LinklyProvider extends AbstractProvider
 
     /**
      * @return array
-     * @throws LinklyProviderException|IdentityProviderException
+     * @throws IdentityProviderException
      */
     public function sendOrder($clientCredentialsToken, $data)
     {
@@ -140,7 +138,7 @@ class LinklyProvider extends AbstractProvider
 
     /**
      * @return array
-     * @throws LinklyProviderException|IdentityProviderException
+     * @throws IdentityProviderException
      */
     public function sendInvoice($clientCredentialsToken, $data)
     {
@@ -162,7 +160,7 @@ class LinklyProvider extends AbstractProvider
     /**
      * @param array $addressData All of "billingAddressId", "billingAddressVersion", "shippingAddressId", and "shippingAddressVersion".
      * @return array
-     * @throws LinklyProviderException|IdentityProviderException
+     * @throws IdentityProviderException
      */
     public function hasAddressBeenChanged($token, array $addressData)
     {
@@ -182,7 +180,7 @@ class LinklyProvider extends AbstractProvider
 
     /**
      * @return array
-     * @throws LinklyProviderException|IdentityProviderException
+     * @throws IdentityProviderException
      */
     public function verifyClientCredentials()
     {
@@ -257,7 +255,7 @@ class LinklyProvider extends AbstractProvider
      *
      * @link   https://developer.github.com/v3/#client-errors
      * @link   https://developer.github.com/v3/oauth/#common-errors-for-the-access-token-request
-     * @throws LinklyProviderException|IdentityProviderException
+     * @throws IdentityProviderException
      * @param ResponseInterface $response
      * @param array $data Parsed response data
      * @return void
@@ -265,9 +263,9 @@ class LinklyProvider extends AbstractProvider
     protected function checkResponse(ResponseInterface $response, $data)
     {
         if ($response->getStatusCode() >= 400) {
-            throw LinklyProviderException::clientException($response, $data);
+            throw IdentityProviderException::clientException($response, $data);
         } elseif (isset($data['error'])) {
-            throw LinklyProviderException::oauthException($response, $data);
+            throw IdentityProviderException::oauthException($response, $data);
         }
     }
 
