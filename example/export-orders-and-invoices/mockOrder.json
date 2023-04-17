@@ -1,0 +1,39 @@
+{
+  "customerEmail": "company@linkly.me",
+  "orderNumber": "33400516",
+  "reference": "Mock JSON Order",
+  "countryCode": "NL",
+  "taxExclusiveAmount": 2900.60,
+  "taxAmount": 737.04,
+  "taxInclusiveAmount": 3509.73,
+  "prePaidAmount": 3509.73,
+  "payableAmount": 0.00,
+  "statusName": "completed",
+  "purchaseDate": "2022-06-20",
+  "lines": [
+    {
+      "sequenceNumber": 1,
+      "name": "Mock InvoiceLine 1",
+      "unitAmount": 571.18,
+      "quantity": 3,
+      "lineAmount": 1713.54,
+      "taxRatePercentage": 21
+    },
+    {
+      "sequenceNumber": 2,
+      "name": "Mock InvoiceLine 2",
+      "unitAmount": 852.93,
+      "quantity": 1,
+      "lineAmount": 852.93,
+      "taxRatePercentage": 0
+    },
+    {
+      "sequenceNumber": 3,
+      "name": "Mock InvoiceLine 3",
+      "unitAmount": 471.63,
+      "quantity": 2,
+      "lineAmount": 943.26,
+      "taxRatePercentage": 9
+    }
+  ]
+}

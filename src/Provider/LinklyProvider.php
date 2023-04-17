@@ -9,6 +9,7 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Linkly\OAuth2\Client\Helpers\CodeChallenge;
+use Linkly\OAuth2\Client\Provider\Exception\LinklyProviderException;
 use Linkly\OAuth2\Client\Provider\User\LinklyUser;
 use Psr\Http\Message\ResponseInterface;
 use function Linkly\OAuth2\Client\Helpers\dd;
@@ -20,17 +21,17 @@ class LinklyProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-    public $domain = 'https://api.linkly.me';
-    public $apiDomain = 'https://api.linkly.me';
+    public string $domain = 'https://api.linkly.me';
+    public string $apiDomain = 'https://api.linkly.me';
 
-    public $betaDomain = 'https://api.acc.linkly.dev';
-    public $betaApiDomain = 'https://api.acc.linkly.dev';
+    public string $betaDomain = 'https://api.acc.linkly.dev';
+    public string $betaApiDomain = 'https://api.acc.linkly.dev';
 
-    public $localDomain = 'https://localhost:5001';
-    public $localApiDomain = 'https://localhost:5001';
+    public string $localDomain = 'https://localhost:5001';
+    public string $localApiDomain = 'https://localhost:5001';
 
-    public $environment = 'prod';
-    private $environmentOptions = ['prod', 'beta', 'local'];
+    public string $environment = 'prod';
+    private array $environmentOptions = ['prod', 'beta', 'local'];
 
     /**
      * @var CodeChallenge
@@ -70,7 +71,7 @@ class LinklyProvider extends AbstractProvider
      *
      * @return string
      */
-    public function getBaseAuthorizationUrl()
+    public function getBaseAuthorizationUrl(): string
     {
         return $this->getDomainUrl() . '/connect/authorize';
     }
@@ -83,22 +84,27 @@ class LinklyProvider extends AbstractProvider
      *
      * @return string
      */
-    public function getBaseAccessTokenUrl(array $params)
+    public function getBaseAccessTokenUrl(array $params): string
     {
         return $this->getDomainUrl() . '/connect/token';
     }
 
-    public function getBaseExternalOrderUrl()
+    public function getBaseExternalOrderUrl(): string
     {
         return $this->getApiDomainUrl() . '/external-api/orders';
     }
 
-    public function getBaseExternalClientUrl()
+    public function getBaseExternalInvoiceUrl(): string
+    {
+        return $this->getApiDomainUrl() . '/external-api/invoices';
+    }
+
+    public function getBaseExternalClientUrl(): string
     {
         return $this->getApiDomainUrl() . '/external-api/clients';
     }
 
-    public function getBaseExternalAddressUrl()
+    public function getBaseExternalAddressUrl(): string
     {
         return $this->getApiDomainUrl() . '/external-api/addresses';
     }
@@ -110,26 +116,25 @@ class LinklyProvider extends AbstractProvider
      *
      * @return string
      */
-    public function getResourceOwnerDetailsUrl(AccessToken $token)
+    public function getResourceOwnerDetailsUrl(AccessToken $token): string
     {
         return $this->getDomainUrl() . '/connect/userinfo';
     }
 
     /**
      * @return array
-     * @throws IdentityProviderException
+     * @throws IdentityProviderException | Exception
      */
-    public function sendOrder($clientCredentialsToken, $data)
+    public function sendOrder($clientCredentialsToken, $data): array
     {
         $method = self::METHOD_POST;
         $url = $this->getBaseExternalOrderUrl();
         $options = ['body' => $data];
 
         if (isJson($data)) {
-            $url .= '/json';
             $options['headers'] = ['Content-Type' => 'application/json'];
         } else {
-            throw new Exception('Order needs to be json encodable');
+            throw new Exception('Invalid order format. Needs to be valid json');
         }
 
         $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsToken, $options);
@@ -138,19 +143,21 @@ class LinklyProvider extends AbstractProvider
 
     /**
      * @return array
-     * @throws IdentityProviderException
+     * @throws IdentityProviderException | Exception
      */
-    public function sendInvoice($clientCredentialsToken, $data)
+    public function sendInvoice($clientCredentialsToken, $data): array
     {
         $method = self::METHOD_POST;
-        $url = $this->getBaseExternalOrderUrl();
+        $url = $this->getBaseExternalInvoiceUrl();
         $options = ['body' => $data];
 
-        if (isXml($data)) {
-            $url .= '/xml';
+        if (isJson($data)) {
+            $options['headers'] = ['Content-Type' => 'application/json'];
+        } else if (isXml($data)) {
+            $url .= '/peppol-xml';
             $options['headers'] = ['Content-Type' => 'application/xml'];
         } else {
-            throw new Exception('Invalid invoice type');
+            throw new Exception('Invalid invoice format. Needs to be either valid json or xml');
         }
 
         $request = $this->getAuthenticatedRequest($method, $url, $clientCredentialsToken, $options);
@@ -162,7 +169,7 @@ class LinklyProvider extends AbstractProvider
      * @return array
      * @throws IdentityProviderException
      */
-    public function hasAddressBeenChanged($token, array $addressData)
+    public function hasAddressBeenChanged($token, array $addressData): array
     {
         $url = $this->getBaseExternalAddressUrl() . '/has-changed';
 
@@ -182,7 +189,7 @@ class LinklyProvider extends AbstractProvider
      * @return array
      * @throws IdentityProviderException
      */
-    public function verifyClientCredentials()
+    public function verifyClientCredentials(): array
     {
         $method = self::METHOD_POST;
         $url = $this->getBaseExternalClientUrl() . '/verify';
@@ -194,7 +201,7 @@ class LinklyProvider extends AbstractProvider
     }
 
 
-    public function getAuthorizationHeaders($token = null)
+    public function getAuthorizationHeaders($token = null): array
     {
         return [
             'Authorization' => 'Bearer ' . $token,
@@ -210,12 +217,12 @@ class LinklyProvider extends AbstractProvider
      *
      * @return array
      */
-    protected function getDefaultScopes()
+    protected function getDefaultScopes(): array
     {
         return ['openid profile offline_access linkly-external-api'];
     }
 
-    protected function getAuthorizationParameters(array $options)
+    protected function getAuthorizationParameters(array $options): array
     {
         $options = parent::getAuthorizationParameters($options);
 
@@ -263,9 +270,9 @@ class LinklyProvider extends AbstractProvider
     protected function checkResponse(ResponseInterface $response, $data)
     {
         if ($response->getStatusCode() >= 400) {
-            throw IdentityProviderException::clientException($response, $data);
+            throw LinklyProviderException::clientException($response, $data);
         } elseif (isset($data['error'])) {
-            throw IdentityProviderException::oauthException($response, $data);
+            throw LinklyProviderException::oauthException($response, $data);
         }
     }
 

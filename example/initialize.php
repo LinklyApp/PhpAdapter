@@ -12,4 +12,4 @@ $provider = new LinklyProvider([
 ]);
 
 $linklySsoHelper = new LinklySsoHelper($provider);
-$linklyInvoiceHelper = new LinklyOrderHelper($provider);
+$linklyOrderHelper = new LinklyOrderHelper($provider);

@@ -11,11 +11,11 @@ use function Linkly\OAuth2\Client\Helpers\dd;
 /** @var $linklyOrderHelper LinklyOrderHelper */
 
 try {
-    $orderAsJson = file_get_contents('./mockOrder.json');
-    $response = $linklyOrderHelper->sendOrder($orderAsJson);
-    echo '<h1>JSON Order was successfully exported to Linkly</h1>';
+    $invoiceAsJson = file_get_contents('./mockInvoice.json');
+    $response = $linklyOrderHelper->sendInvoice($invoiceAsJson);
+    echo '<h1>JSON Invoice was successfully exported to Linkly</h1>';
     dd($response);
 } catch (IdentityProviderException $e) {
-    echo '<h1>Error: Order was not exported</h1>';
+    echo '<h1>Error: Invoice was not exported</h1>';
     dd($e->getResponseBody());
 }
