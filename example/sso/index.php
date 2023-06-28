@@ -19,6 +19,7 @@ use function Linkly\OAuth2\Client\Helpers\dd;
 <?php else : ?>
     <div><a href="user-info.php">See user info</a></div>
     <div><a href="token.php">Token</a></div>
+    <div><a href="change-address.php">Change address</a></div>
     <div><a href="logout.php">Logout</a></div>
 
     <div>Has address been changed: <?php
