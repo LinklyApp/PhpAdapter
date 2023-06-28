@@ -31,6 +31,14 @@ class LinklySsoHelper
         exit;
     }
 
+    public function changeAddress(array $options = []){
+        $this->renewTokenIfExpired();
+
+        $changeAddressUrl = $this->provider->getChangeAddressUrl($options);
+        header('Location: ' . $changeAddressUrl);
+        exit;
+    }
+
     public function isAuthenticated()
     {
         if (!isset($_SESSION['token'])) {
