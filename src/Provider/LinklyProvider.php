@@ -23,12 +23,15 @@ class LinklyProvider extends AbstractProvider
 
     public string $domain = 'https://api.linkly.me';
     public string $apiDomain = 'https://api.linkly.me';
+    public string $webDomain = 'https://web.linkly.me';
 
     public string $betaDomain = 'https://api.acc.linkly.dev';
     public string $betaApiDomain = 'https://api.acc.linkly.dev';
+    public string $betaWebDomain = 'https://web.acc.linkly.dev';
 
     public string $localDomain = 'https://localhost:5001';
     public string $localApiDomain = 'https://localhost:5001';
+    public string $localWebDomain = 'https://localhost:4000';
 
     public string $environment = 'prod';
     private array $environmentOptions = ['prod', 'beta', 'local'];
@@ -74,6 +77,22 @@ class LinklyProvider extends AbstractProvider
     public function getBaseAuthorizationUrl(): string
     {
         return $this->getDomainUrl() . '/connect/authorize';
+    }
+
+    /**
+     * Get url to change address
+     *
+     * @param string $clientId
+     * @param array $options
+     * @return string
+     */
+    public function getChangeAddressUrl(array $options = []): string
+    {
+        $base   = $this->getWebDomainUrl();
+        $base  .= '/ext/shop-address';
+        $query  = http_build_query($options);
+
+        return $this->appendQuery($base, $query);
     }
 
 
@@ -290,7 +309,9 @@ class LinklyProvider extends AbstractProvider
     }
 
     /**
-     * Get the base Facebook URL.
+     * Get the domain for the domain based on the environment.
+     *
+     * @return string
      */
     private function getDomainUrl(): string
     {
@@ -304,7 +325,9 @@ class LinklyProvider extends AbstractProvider
     }
 
     /**
-     * Get the base Graph API URL.
+     * Get the url for the api domain based on the environment.
+     *
+     * @return string
      */
     private function getApiDomainUrl(): string
     {
@@ -315,5 +338,21 @@ class LinklyProvider extends AbstractProvider
             return $this->betaApiDomain;
         }
         return $this->apiDomain;
+    }
+
+    /**
+     * Get the url for the web domain based on the environment.
+     *
+     * @return string
+     */
+    private function getWebDomainUrl(): string
+    {
+        if ($this->environment === 'local') {
+            return $this->localWebDomain;
+        }
+        if ($this->environment === 'beta') {
+            return $this->betaWebDomain;
+        }
+        return $this->webDomain;
     }
 }
