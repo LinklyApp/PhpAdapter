@@ -1,0 +1,31 @@
+{
+    "name": "linkly-app/php-adapter",
+    "description": "Linkly PHP Adapter to connect to the Linkly API",
+    "license": "MIT",
+    "keywords": [
+        "oauth2",
+        "authorization",
+        "authentication",
+        "linkly"
+    ],
+    "authors": [
+        {
+            "name": "msthu",
+            "email": "mischa@b302.nl"
+        }
+    ],
+    "require": {
+        "league/oauth2-client": "^2.6",
+        "firebase/php-jwt": "^5.4",
+        "php": ">=7.4"
+    },
+    "archive": {
+        "exclude": ["/example"]
+    },
+    "autoload": {
+        "psr-4": {
+            "Linkly\\OAuth2\\Client\\": "src/"
+        },
+        "files": [ "src/Helpers/helpers.php" ]
+    }
+}

@@ -1,0 +1,55 @@
+{
+  "customerEmail": "company@linkly.me",
+  "orderNumber": "33400518",
+  "reference": "Mock JSON Order",
+  "countryCode": "NL",
+  "taxExclusiveAmount": 460,
+  "taxAmount": 96.60,
+  "taxInclusiveAmount": 556.60,
+  "prePaidAmount": 556.60,
+  "payableAmount": 0.00,
+  "statusName": "completed",
+  "purchaseDate": "2023-01-01",
+  "billingAddress": {
+    "firstName": "Mock",
+    "lastName": "JSON",
+    "address1": "Mock AddressLine 1d",
+    "address2": "Mock AddressLine 2",
+    "companyName": "Mock Company",
+    "phoneNumber": "0612345678",
+    "postcode": "1234AB",
+    "city": "Mock City",
+    "extraInfo": "Mock Extra Info",
+    "countryAlpha2": "NL"
+  },
+  "shippingAddress": {
+    "firstName": "Mock",
+    "lastName": "JSON",
+    "address1": "Mock AddressLine 1",
+    "address2": "Mock AddressLine 2",
+    "companyName": "Mock Company",
+    "phoneNumber": "0612345678",
+    "postcode": "1234AB",
+    "city": "Mock City",
+    "extraInfo": "Mock Extra Info",
+    "countryAlpha2": "NL"
+  },
+  "lines": [
+    {
+      "sequenceNumber": 1,
+      "name": "Mock - Ventilator",
+      "unitAmount": 30,
+      "quantity": 2,
+      "lineAmount": 60,
+      "taxRatePercentage": 21
+    },
+    {
+      "sequenceNumber": 2,
+      "name": "Mock - Koelkast",
+      "unitAmount": 400,
+      "quantity": 1,
+      "lineAmount": 400,
+      "taxRatePercentage": 21
+    }
+  ]
+}
