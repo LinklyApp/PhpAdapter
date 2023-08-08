@@ -7,4 +7,4 @@ require '../initialize.php';
 use Linkly\OAuth2\Client\Helpers\LinklySsoHelper;
 
 /** @var LinklySsoHelper $linklySsoHelper */
-$linklySsoHelper->changeAddressRedirect(['clientId' => $linklyClientId, 'redirectUrl' => '//'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).'/index.php']);
+$linklySsoHelper->changeAddressRedirect(['clientId' => $linklyClientId, 'returnUrl' => '//'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).'/index.php']);
