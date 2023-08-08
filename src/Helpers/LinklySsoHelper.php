@@ -83,7 +83,9 @@ class LinklySsoHelper
             }
         }
 
-        $_SESSION['linklyState'] = $this->provider->getState();
+        $state = $this->provider->getState();
+        $_SESSION['linklyState'] = $state;
+        $options['state'] = $state;
 
         $linkClientUrl = $this->provider->getLinkClientUrl($options);
         header('Location: ' . $linkClientUrl);
