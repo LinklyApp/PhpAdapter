@@ -32,9 +32,27 @@ class LinklySsoHelper
         exit;
     }
 
+    /**
+     *
+     * @param array $options {
+     *     An array of options.
+     *
+     * @var string $returnUrl URL for redirection after changing Address.
+     * @var string $clientId Unique identifier for the client.
+     *
+     * @throws Exception
+     */
     public function changeAddressRedirect(array $options = [])
     {
         $this->renewTokenIfExpired();
+
+        $requiredOptions = ['returnUrl', 'clientId'];
+
+        foreach ($requiredOptions as $option) {
+            if (!isset($options[$option])) {
+                throw new InvalidArgumentException("Missing required option: $option");
+            }
+        }
 
         $changeAddressUrl = $this->provider->getChangeAddressUrl($options);
         header('Location: ' . $changeAddressUrl);
