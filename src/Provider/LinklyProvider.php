@@ -329,7 +329,7 @@ class LinklyProvider extends AbstractProvider
      *
      * @return string
      */
-    private function getDomainUrl(): string
+    public function getDomainUrl(): string
     {
         if ($this->environment === 'local') {
             return $this->localDomain;
@@ -345,7 +345,7 @@ class LinklyProvider extends AbstractProvider
      *
      * @return string
      */
-    private function getApiDomainUrl(): string
+    public function getApiDomainUrl(): string
     {
         if ($this->environment === 'local') {
             return $this->localApiDomain;
@@ -361,7 +361,7 @@ class LinklyProvider extends AbstractProvider
      *
      * @return string
      */
-    private function getWebDomainUrl(): string
+    public function getWebDomainUrl(): string
     {
         if ($this->environment === 'local') {
             return $this->localWebDomain;
