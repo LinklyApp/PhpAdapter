@@ -4,6 +4,7 @@ namespace Linkly\OAuth2\Client\Helpers;
 
 use Exception;
 use Firebase\JWT\JWT;
+use InvalidArgumentException;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Linkly\OAuth2\Client\Provider\LinklyProvider;
 use Linkly\OAuth2\Client\Provider\User\LinklyUser;
