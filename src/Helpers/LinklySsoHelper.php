@@ -83,10 +83,6 @@ class LinklySsoHelper
             }
         }
 
-        $state = $this->provider->getState();
-        $_SESSION['linklyState'] = $state;
-        $options['state'] = $state;
-
         $linkClientUrl = $this->provider->getLinkClientUrl($options);
         header('Location: ' . $linkClientUrl);
         exit;
@@ -103,8 +99,6 @@ class LinklySsoHelper
      */
     public function linkClientCallback()
     {
-        $this->checkIfValidState();
-
         if (!isset($_GET['client_id']) || !isset($_GET['client_secret'])) {
             throw new Exception('Both client_id and client_secret must be set');
         }
