@@ -45,16 +45,6 @@ class LinklyProvider extends AbstractProvider
     {
         parent::__construct($options, $collaborators);
 
-        // Validate and set clientId
-        if (empty($options['clientId'])) {
-            throw new \InvalidArgumentException("Missing 'clientId' parameter.");
-        }
-
-        // Validate and set clientSecret
-        if (empty($options['clientSecret'])) {
-            throw new \InvalidArgumentException("Missing 'clientSecret' parameter.");
-        }
-
         if (!empty($options['environment'])) {
             if (!in_array($options['environment'], $this->environmentOptions)) {
                 $message = 'Invalid environment, available options are "prod", "beta" and "local"';
