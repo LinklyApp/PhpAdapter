@@ -45,6 +45,16 @@ class LinklyProvider extends AbstractProvider
     {
         parent::__construct($options, $collaborators);
 
+        // Validate and set clientId
+        if (empty($options['clientId'])) {
+            throw new \InvalidArgumentException("Missing 'clientId' parameter.");
+        }
+
+        // Validate and set clientSecret
+        if (empty($options['clientSecret'])) {
+            throw new \InvalidArgumentException("Missing 'clientSecret' parameter.");
+        }
+
         if (!empty($options['environment'])) {
             if (!in_array($options['environment'], $this->environmentOptions)) {
                 $message = 'Invalid environment, available options are "prod", "beta" and "local"';
@@ -221,11 +231,25 @@ class LinklyProvider extends AbstractProvider
     }
 
     /**
+     *
+     * @param array $options {
+     *     An array of options.
+     *
+     * @var string $clientId Unique identifier for the client (Optional).
+     * @var string $clientSecret Unique secret for the client (Optional).
+     *
      * @return array
      * @throws IdentityProviderException
      */
-    public function verifyClientCredentials(): array
+    public function verifyClientCredentials(array $options = []): array
     {
+        if (isset($options['clientId'])) {
+            $this->clientId = $options['clientId'];
+        }
+        if (isset($options['clientSecret'])) {
+            $this->clientSecret = $options['clientSecret'];
+        }
+
         $method = self::METHOD_POST;
         $url = $this->getBaseExternalClientUrl() . '/verify';
 

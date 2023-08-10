@@ -88,38 +88,6 @@ class LinklySsoHelper
         exit;
     }
 
-    /*
-     * Links a client with provided options.
-     * @return array {
-     *    An array of options.
-     *   @var string $client_id Unique identifier for the client.
-     *   @var string $client_secret Secret for the client.
-     * }
-     *
-     */
-    public function linkClientCallback()
-    {
-        if (!isset($_GET['client_id']) || !isset($_GET['client_secret'])) {
-            throw new Exception('Both client_id and client_secret must be set');
-        }
-
-        $client_id = filter_input(INPUT_GET, 'client_id', FILTER_SANITIZE_STRING);
-        $client_secret = filter_input(INPUT_GET, 'client_secret', FILTER_SANITIZE_STRING);
-
-        if (!$client_id) {
-            throw new Exception('client_id is either not set or contains invalid characters');
-        }
-
-        if (!$client_secret) {
-            throw new Exception('client_secret is either not set or contains invalid characters');
-        }
-
-        return array(
-            'client_id' => $client_id,
-            'client_secret' => $client_secret
-        );
-    }
-
     public function isAuthenticated()
     {
         if (!isset($_SESSION['token'])) {
@@ -191,11 +159,19 @@ class LinklySsoHelper
     }
 
     /**
+     *
+     * @param array $options {
+     *     An array of options.
+     *
+     * @var string $clientId Unique identifier for the client (Optional).
+     * @var string $clientSecret Unique secret for the client (Optional).
+     *
+     * @return array
      * @throws IdentityProviderException
      */
-    public function verifyClientCredentials()
+    public function verifyClientCredentials(array $options = [])
     {
-        return $this->provider->verifyClientCredentials();
+        return $this->provider->verifyClientCredentials($options);
     }
 
     /**
