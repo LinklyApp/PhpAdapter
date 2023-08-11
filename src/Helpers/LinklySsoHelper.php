@@ -108,6 +108,9 @@ class LinklySsoHelper
         exit;
     }
 
+    /**
+     * @throws Exception
+     */
     public function linkClientCallback()
     {
         $this->checkIfValidState();
