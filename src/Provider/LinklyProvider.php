@@ -88,9 +88,9 @@ class LinklyProvider extends AbstractProvider
      */
     public function getChangeAddressUrl(array $options = []): string
     {
-        $base   = $this->getWebDomainUrl();
-        $base  .= '/ext/shop-address';
-        $query  = http_build_query($options);
+        $base = $this->getWebDomainUrl();
+        $base .= '/ext/shop-address';
+        $query = http_build_query($options);
 
         return $this->appendQuery($base, $query);
     }
@@ -103,20 +103,22 @@ class LinklyProvider extends AbstractProvider
      */
     public function getLinkClientUrl(array $options = []): string
     {
-        $base   = $this->getWebDomainUrl();
-        $base  .= '/apps';
+        $base = $this->getWebDomainUrl();
+        $base .= '/apps';
 
-        if (empty($options['state'])) {
-            $options['state'] = $this->getRandomState();
+        $this->state = $this->getRandomState();
+
+        // check if $options[returnUrl] has query params
+        if ($options['returnUrl'] && strpos($options['returnUrl'], '?') !== false) {
+            $options['returnUrl'] .= '&state=' . $this->state;
+        } else {
+            $options['returnUrl'] .= '?state=' . $this->state;
         }
 
-        $this->state = $options['state'];
-
-        $query  = http_build_query($options);
+        $query = http_build_query($options);
 
         return $this->appendQuery($base, $query);
     }
-
 
 
     /**
@@ -232,11 +234,11 @@ class LinklyProvider extends AbstractProvider
      * @param array $options {
      *     An array of options.
      *
+     * @return array
+     * @throws IdentityProviderException
      * @var string $clientId Unique identifier for the client (Optional).
      * @var string $clientSecret Unique secret for the client (Optional).
      *
-     * @return array
-     * @throws IdentityProviderException
      */
     public function verifyClientCredentials(array $options = []): array
     {
