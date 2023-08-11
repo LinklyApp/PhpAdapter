@@ -8,7 +8,6 @@ use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
-use Linkly\OAuth2\Client\Helpers\CodeChallenge;
 use Linkly\OAuth2\Client\Provider\Exception\LinklyProviderException;
 use Linkly\OAuth2\Client\Provider\User\LinklyUser;
 use Psr\Http\Message\ResponseInterface;
@@ -35,11 +34,6 @@ class LinklyProvider extends AbstractProvider
 
     public string $environment = 'prod';
     private array $environmentOptions = ['prod', 'beta', 'local'];
-
-    /**
-     * @var CodeChallenge
-     */
-    private $codeChallenge;
 
     public function __construct($options = [], array $collaborators = [])
     {
@@ -284,17 +278,11 @@ class LinklyProvider extends AbstractProvider
     {
         $options = parent::getAuthorizationParameters($options);
 
-        $this->codeChallenge = new CodeChallenge();
-        $this->codeChallenge->generate();
-
-        $options['code_challenge'] = $this->codeChallenge->challenge;
-        $options['code_challenge_method'] = $this->codeChallenge->challengeMethod;
-
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
-        $_SESSION['code_verifier'] = $this->codeChallenge->verifier;
+        $_SESSION['pkce_code'] = $this->pkceCode;
 
         return $options;
     }
@@ -305,14 +293,22 @@ class LinklyProvider extends AbstractProvider
             session_start();
         }
 
-        if (isset($_SESSION['code_verifier'])) {
-            $options['code_verifier'] = $_SESSION['code_verifier'];
-            unset($_SESSION['code_verifier']);
+        if (isset($_SESSION['pkce_code']) && $grant == 'authorization_code') {
+            $this->pkceCode = $_SESSION['pkce_code'];
+            unset($_SESSION['pkce_code']);
         }
 
         $options['response_type'] = 'code';
 
         return parent::getAccessToken($grant, $options);
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getPkceMethod()
+    {
+        return static::PKCE_METHOD_S256;
     }
 
     /**
