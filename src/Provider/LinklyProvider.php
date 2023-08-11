@@ -105,6 +105,11 @@ class LinklyProvider extends AbstractProvider
     {
         $base   = $this->getWebDomainUrl();
         $base  .= '/apps';
+
+        if (empty($options['state'])) {
+            $options['state'] = $this->getRandomState();
+        }
+
         $query  = http_build_query($options);
 
         return $this->appendQuery($base, $query);

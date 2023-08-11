@@ -33,6 +33,25 @@ class LinklySsoHelper
         exit;
     }
 
+    public function callback()
+    {
+        if (isset($_GET['error'])) {
+            throw new \Exception($_GET['error']);
+        }
+
+        if (!isset($_GET['code'])) {
+            throw new \Exception('Code challenge is not set. Use login()');
+        }
+
+        $this->checkIfValidState();
+
+        $token = $this->provider->getAccessToken('authorization_code', [
+            'code' => $_GET['code'],
+        ]);
+
+        $_SESSION['token'] = $token;
+    }
+
     /**
      *
      * @param array $options {
@@ -84,8 +103,14 @@ class LinklySsoHelper
         }
 
         $linkClientUrl = $this->provider->getLinkClientUrl($options);
+        $_SESSION['linklyState'] = $this->provider->getState();
         header('Location: ' . $linkClientUrl);
         exit;
+    }
+
+    public function linkClientCallback()
+    {
+        $this->checkIfValidState();
     }
 
     public function isAuthenticated()
@@ -99,24 +124,6 @@ class LinklySsoHelper
         return true;
     }
 
-    public function callback()
-    {
-        if (isset($_GET['error'])) {
-            throw new \Exception($_GET['error']);
-        }
-
-        if (!isset($_GET['code'])) {
-            throw new \Exception('Code challenge is not set. Use login()');
-        }
-
-        $this->checkIfValidState();
-
-        $token = $this->provider->getAccessToken('authorization_code', [
-            'code' => $_GET['code'],
-        ]);
-
-        $_SESSION['token'] = $token;
-    }
 
     public function logout()
     {
