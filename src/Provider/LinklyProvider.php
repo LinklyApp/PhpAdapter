@@ -110,6 +110,8 @@ class LinklyProvider extends AbstractProvider
             $options['state'] = $this->getRandomState();
         }
 
+        $this->state = $options['state'];
+
         $query  = http_build_query($options);
 
         return $this->appendQuery($base, $query);
