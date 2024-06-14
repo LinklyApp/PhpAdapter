@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use function Linkly\OAuth2\Client\Helpers\dd;
 use function Linkly\OAuth2\Client\Helpers\isJson;
 use function Linkly\OAuth2\Client\Helpers\isXml;
+use function Linkly\OAuth2\Client\Helpers\startLinklySession;
 
 
 class LinklyProvider extends AbstractProvider
@@ -282,7 +283,7 @@ class LinklyProvider extends AbstractProvider
             session_start();
         }
 
-        $_SESSION['pkce_code'] = $this->pkceCode;
+        $this->setSessionVariable('pkce_code', $this->pkceCode);
 
         return $options;
     }
@@ -293,9 +294,10 @@ class LinklyProvider extends AbstractProvider
             session_start();
         }
 
-        if (isset($_SESSION['pkce_code']) && $grant == 'authorization_code') {
-            $this->pkceCode = $_SESSION['pkce_code'];
-            unset($_SESSION['pkce_code']);
+        $pkceCode = $this->getSessionVariable('pkce_code');
+        if ($pkceCode && $grant == 'authorization_code') {
+            $this->pkceCode = $pkceCode;
+            $this->deleteSessionVariable('pkce_code');
         }
 
         $options['response_type'] = 'code';
@@ -389,5 +391,38 @@ class LinklyProvider extends AbstractProvider
             return $this->betaWebDomain;
         }
         return $this->webDomain;
+    }
+
+    public function getSessionVariable($key)
+    {
+        $this->startSession();
+        return $_SESSION['linkly'][$key] ?? null;
+    }
+
+    public function setSessionVariable($key, $value)
+    {
+        $this->startSession();
+        $_SESSION['linkly'][$key] = $value;
+    }
+
+    public function deleteSessionVariable($key)
+    {
+        $this->startSession();
+        unset($_SESSION['linkly'][$key]);
+    }
+
+    public function deleteSession()
+    {
+        $this->startSession();
+        unset($_SESSION['linkly']);
+    }
+    public function startSession()
+    {
+        $sessionName = 'LinklySession';
+
+        if (session_status() == PHP_SESSION_NONE) {
+            session_name($sessionName);
+            session_start();
+        }
     }
 }

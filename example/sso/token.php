@@ -15,5 +15,5 @@ if (!$linklySsoHelper->isAuthenticated()) {
 } ?>
 
 <?php
-returnAsJson(['token' => $_SESSION['token']]);
+returnAsJson(['token' => $linklySsoHelper->getToken()]);
 ?>
