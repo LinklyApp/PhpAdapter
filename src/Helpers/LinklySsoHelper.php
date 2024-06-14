@@ -207,7 +207,7 @@ class LinklySsoHelper
     {
         try {
             $currentToken = $this->provider->getSessionVariable('token');
-            if (!$currentToken->hasExpired()) {
+            if (is_null($currentToken) ||  !$currentToken->hasExpired()) {
                 return;
             }
 
