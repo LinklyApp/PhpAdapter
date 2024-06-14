@@ -18,7 +18,7 @@ class LinklySsoHelper
     public function __construct(LinklyProvider $provider)
     {
         $this->provider = $provider;
-        $this->startLinklySession();
+        $this->provider->startSession();
     }
 
     public function authorizeRedirect()
@@ -28,7 +28,9 @@ class LinklySsoHelper
         }
 
         $authUrl = $this->provider->getAuthorizationUrl();
-        $_SESSION['linklyState'] = $this->provider->getState();
+
+        $this->provider->setSessionVariable('state', $this->provider->getState());
+
         header('Location: ' . $authUrl);
         exit;
     }
@@ -49,7 +51,7 @@ class LinklySsoHelper
             'code' => $_GET['code'],
         ]);
 
-        $_SESSION['token'] = $token;
+        $this->provider->setSessionVariable('token', $token);
     }
 
     /**
@@ -103,7 +105,8 @@ class LinklySsoHelper
         }
 
         $linkClientUrl = $this->provider->getLinkClientUrl($options);
-        $_SESSION['linklyState'] = $this->provider->getState();
+
+        $this->provider->setSessionVariable('state', $this->provider->getState());
         header('Location: ' . $linkClientUrl);
         exit;
     }
@@ -118,7 +121,7 @@ class LinklySsoHelper
 
     public function isAuthenticated()
     {
-        if (!isset($_SESSION['token'])) {
+        if ($this->provider->getSessionVariable('token') == null) {
             return false;
         }
 
@@ -130,7 +133,7 @@ class LinklySsoHelper
 
     public function logout()
     {
-        unset($_SESSION['token']);
+        $this->provider->deleteSession();
     }
 
     public function getUser(): LinklyUser
@@ -138,7 +141,7 @@ class LinklySsoHelper
         $this->renewTokenIfExpired();
 
         /** @var LinklyUser $linklyUser */
-        $linklyUser = $this->provider->getResourceOwner($_SESSION['token']);
+        $linklyUser = $this->provider->getResourceOwner($this->provider->getSessionVariable('token'));
         return $linklyUser;
     }
 
@@ -156,16 +159,21 @@ class LinklySsoHelper
 
     public function getJWTPayload()
     {
-        $token = $_SESSION['token'];
+        $token = $this->provider->getSessionVariable('token');
 
         if (!$token) {
-            session_destroy();
+            $this->provider->deleteSession();
             $this->authorizeRedirect();
         }
 
         $tks = explode('.', $token);
         list($headb64, $bodyb64, $cryptob64) = $tks;
         return JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64));
+    }
+
+    public function getToken()
+    {
+        return $this->provider->getSessionVariable('token');
     }
 
     /**
@@ -192,13 +200,13 @@ class LinklySsoHelper
     public function hasAddressBeenChanged(array $addressData)
     {
         $this->renewTokenIfExpired();
-        return $this->provider->hasAddressBeenChanged($_SESSION['token'], $addressData);
+        return $this->provider->hasAddressBeenChanged($this->provider->getSessionVariable('token'), $addressData);
     }
 
     private function renewTokenIfExpired()
     {
         try {
-            $currentToken = $_SESSION['token'];
+            $currentToken = $this->provider->getSessionVariable('token');
             if (!$currentToken->hasExpired()) {
                 return;
             }
@@ -207,35 +215,17 @@ class LinklySsoHelper
                 'refresh_token' => $currentToken->getRefreshToken()
             ]);
 
-            $_SESSION['token'] = $newAccessToken;
+            $this->provider->setSessionVariable('token', $newAccessToken);
         } catch (\Exception $exception) {
-            session_destroy();
+            $this->provider->deleteSession();
             $this->authorizeRedirect();
         }
     }
 
-    private function startLinklySession()
-    {
-        $name = 'LinklySession';
-
-        if ($name === session_name()) {
-            return;
-        }
-
-        session_write_close();
-        session_name($name);
-        if (!isset($_COOKIE[$name])) {
-            $_COOKIE[$name] = session_create_id();
-        }
-        session_id($_COOKIE[$name]);
-        session_start();
-    }
-
-
     private function checkIfValidState()
     {
-        if (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['linklyState'])) {
-            throw new \Exception('linklyState does not match returned state');
+        if (empty($_GET['state']) || ($_GET['state'] !== $this->provider->getSessionVariable('state'))) {
+            throw new \Exception('Session state does not match returned state');
         }
     }
 }
