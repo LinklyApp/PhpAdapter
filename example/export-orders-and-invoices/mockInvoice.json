@@ -11,6 +11,7 @@
   "taxInclusiveAmount": 3954.47,
   "prePaidAmount": 3954.47,
   "payableAmount": 0.00,
+  "currencyCode": "EUR",
   "billingAddress": {
     "firstName": "Mock",
     "lastName": "JSON",
