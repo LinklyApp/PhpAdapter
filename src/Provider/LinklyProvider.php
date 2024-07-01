@@ -416,23 +416,18 @@ class LinklyProvider extends AbstractProvider
         $this->startSession();
         unset($_SESSION['linkly']);
     }
+
     public function startSession()
     {
-        $sessionName = 'LinklySession';
-
-        if (session_status() == PHP_SESSION_NONE) {
-            session_name($sessionName);
-            if (!isset($_COOKIE[$sessionName])) {
-                session_id(session_create_id());
-            }
-            session_start();
-        } elseif (session_name() !== $sessionName) {
-            session_write_close();
-            session_name($sessionName);
-            if (!isset($_COOKIE[$sessionName])) {
-                session_id(session_create_id());
-            }
-            session_start();
+        if (session_status() != PHP_SESSION_NONE) {
+            return;
         }
+
+        $sessionName = 'LinklySession';
+        session_name($sessionName);
+        if (!isset($_COOKIE[$sessionName])) {
+            session_id(session_create_id());
+        }
+        session_start();
     }
 }
